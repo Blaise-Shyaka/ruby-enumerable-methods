@@ -17,7 +17,13 @@ def my_each()
 end
 
 def my_each_with_index
-  puts "Hello"
+  return to_enum unless block_given?
+  
+  object_to_return = []
+  for i in 0...self.length
+   object_to_return << yield(self[i], i)
+  end
+  return object_to_return
 end
 
 def my_select
@@ -40,7 +46,14 @@ end
 
 end
 
-# Test 1
+# Test #my_each
 puts [3,5,67,23,4].my_each {|el| puts el}
 puts "Built-in each..."
-puts [3,5,67,23,4].each {|el,el2| puts el+el2}
+#puts [3,5,67,23,4].each {|el,el2| puts el+el2}
+
+# Test #my_each_with_index
+puts "======= Tests for my_each_with_index ======"
+puts "It should return the enumerable if no block given"
+puts [1,2,3,4].my_each_with_index
+puts "It should execute the code given in the block"
+p [1,2,3,4].my_each_with_index { |val, index| val * index }
