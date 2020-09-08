@@ -18,7 +18,7 @@ end
 
 def my_each_with_index
   return to_enum unless block_given?
-  
+
   object_to_return = []
   for i in 0...self.length
    object_to_return << yield(self[i], i)
@@ -27,6 +27,13 @@ def my_each_with_index
 end
 
 def my_select
+  return to_enum unless block_given?
+
+  object_to_return = []
+  self.my_each do |element|
+    object_to_return << element if yield(element)
+  end
+  return object_to_return
 end
 def my_all?
 end
@@ -57,3 +64,10 @@ puts "It should return the enumerable if no block given"
 puts [1,2,3,4].my_each_with_index
 puts "It should execute the code given in the block"
 p [1,2,3,4].my_each_with_index { |val, index| val * index }
+
+# Test #my_select
+puts "======= Tests for my_select ======"
+puts "It should return the enumerable if no block given"
+puts [1,2,3,4].my_select
+puts "It should execute the code given in the block"
+p [1,2,3,4].my_select { |elt| elt > 2 }
