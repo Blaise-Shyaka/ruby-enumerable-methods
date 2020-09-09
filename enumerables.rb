@@ -69,7 +69,6 @@ def my_any?(*arg, &block)
   if arg.length == 1
     if arg[0].kind_of? Class
       i=0
-      puts "arg[0] is: #{arg[0]}"
       while i < self.length
         return true if self[i].kind_of? arg[0]
         i += 1
@@ -77,7 +76,6 @@ def my_any?(*arg, &block)
       return false
     else
       i=0
-      puts "arg[0] is: #{arg[0]}"
       while i < self.length
         return true if self[i] == arg
         i += 1
@@ -95,7 +93,8 @@ def my_any?(*arg, &block)
   return false
 end
 
-def my_none?
+def my_none?(*arg, &block)
+  return !my_any?(*arg, &block)
 end
 def my_count
 end
@@ -151,3 +150,11 @@ puts "any? is: #{[5,3,77,"f"].any?(String)}"
 puts "my_any? is: #{[5,3,77,"f"].my_any?(String)}"
 puts [7, 5, 1, 5].any? {|elt| elt % 2 == 0}
 puts [7, 5, 1, 5].my_any? {|elt| elt % 2 == 0}
+
+puts "Testing my any..."
+puts "none? is: #{[5,3,77].none?(Numeric)}"
+puts "my_none? is: #{[5,3,77].my_none?(Numeric)}"
+puts "none? is: #{[5,3,77,"f"].none?(String)}"
+puts "my_none? is: #{[5,3,77,"f"].my_none?(String)}"
+puts [7, 5, 1, 5].none? {|elt| elt % 2 == 0}
+puts [7, 5, 1, 5].my_none? {|elt| elt % 2 == 0}
