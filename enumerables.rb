@@ -35,8 +35,16 @@ def my_select
   end
   return object_to_return
 end
-def my_all?
+#args = Proc.new={|obj| obj}
+def my_all?()
+  return "No block given..." unless block_given?
+  i=0
+  while i < self.length
+    puts yield(self[i])
+    i+=1
+  end
 end
+
 def my_any?
 end
 def my_none?
@@ -54,6 +62,7 @@ end
 end
 
 # Test #my_each
+=begin 
 puts [3,5,67,23,4].my_each {|el| puts el}
 puts "Built-in each..."
 #puts [3,5,67,23,4].each {|el,el2| puts el+el2}
@@ -70,4 +79,10 @@ puts "======= Tests for my_select ======"
 puts "It should return the enumerable if no block given"
 puts [1,2,3,4].my_select
 puts "It should execute the code given in the block"
-p [1,2,3,4].my_select { |elt| elt > 2 }
+p [1,2,3,4].my_select { |elt| elt > 2 } 
+=end
+
+# Test #my_all?
+puts [nil, true, 99].all?
+puts "Testing my all..."
+puts [0, 5, 99,-5].my_all? {|el| el>0}
