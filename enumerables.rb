@@ -96,7 +96,25 @@ end
 def my_none?(*arg, &block)
   return !my_any?(*arg, &block)
 end
-def my_count
+
+def my_count(*arg, &block)
+  count = 0
+  if arg.length == 1
+      i=0
+      while i < self.length
+        count += 1 if self[i] == arg[0]
+        i += 1
+      end
+      return count
+  end
+
+  block = lambda{|obj| obj} unless block_given?
+  i=0
+  while i < self.length
+    count += 1 if block.call(self[i])
+    i += 1
+  end
+  return count
 end
 def my_map
 end
@@ -143,18 +161,26 @@ puts "Testing my all..."
 # puts "all? is: #{[5,3,6].all?(Block)}"
 # puts "my_all? is: #{[5,3,77].my_all?(Block)}"
 
-puts "Testing my any..."
-puts "any? is: #{[5,3,77].any?(Numeric)}"
-puts "my_any? is: #{[5,3,77].my_any?(Numeric)}"
-puts "any? is: #{[5,3,77,"f"].any?(String)}"
-puts "my_any? is: #{[5,3,77,"f"].my_any?(String)}"
-puts [7, 5, 1, 5].any? {|elt| elt % 2 == 0}
-puts [7, 5, 1, 5].my_any? {|elt| elt % 2 == 0}
+# puts "Testing my any..."
+# puts "any? is: #{[5,3,77].any?(Numeric)}"
+# puts "my_any? is: #{[5,3,77].my_any?(Numeric)}"
+# puts "any? is: #{[5,3,77,"f"].any?(String)}"
+# puts "my_any? is: #{[5,3,77,"f"].my_any?(String)}"
+# puts [7, 5, 1, 5].any? {|elt| elt % 2 == 0}
+# puts [7, 5, 1, 5].my_any? {|elt| elt % 2 == 0}
 
-puts "Testing my any..."
-puts "none? is: #{[5,3,77].none?(Numeric)}"
-puts "my_none? is: #{[5,3,77].my_none?(Numeric)}"
-puts "none? is: #{[5,3,77,"f"].none?(String)}"
-puts "my_none? is: #{[5,3,77,"f"].my_none?(String)}"
-puts [7, 5, 1, 5].none? {|elt| elt % 2 == 0}
-puts [7, 5, 1, 5].my_none? {|elt| elt % 2 == 0}
+# puts "Testing my_any..."
+# puts "none? is: #{[5,3,77].none?(Numeric)}"
+# puts "my_none? is: #{[5,3,77].my_none?(Numeric)}"
+# puts "none? is: #{[5,3,77,"f"].none?(String)}"
+# puts "my_none? is: #{[5,3,77,"f"].my_none?(String)}"
+# puts [7, 5, 1, 5].none? {|elt| elt % 2 == 0}
+# puts [7, 5, 1, 5].my_none? {|elt| elt % 2 == 0}
+
+puts "Testing my_count..."
+puts "count is: #{[5,3,77].count(3)}"
+puts "my_count is: #{[5,3,77].my_count(3)}"
+puts "count is: #{[5,3,77,1].count do |elt| elt > 1 end}"
+puts "my_count is: #{[5,3,77,1].my_count do |elt| elt > 1 end}"
+puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
+puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric}
