@@ -36,11 +36,19 @@ def my_select
   return object_to_return
 end
 #args = Proc.new={|obj| obj}
-def my_all?()
-  return "No block given..." unless block_given?
+def my_all?(*arg, &block)
+  if arg.length == 1
+    i=0
+    while i < self.length
+      return false if self[i] != arg
+      i += 1
+    end
+  end
+
+  block = lambda{|obj| obj} unless block_given?
   i=0
   while i < self.length
-    return false if !yield(self[i])
+    return false if !block.call(self[i])
     i += 1
   end
   return true
@@ -85,5 +93,12 @@ p [1,2,3,4].my_select { |elt| elt > 2 }
 
 # Test #my_all?
 puts [nil, true, 99].all?
+puts [1, nil, 5, 99, "g"].my_all? 
+puts [1, 4, 5, 99, "g"].all? (Numeric)
+puts [8, 4, 4, 2].all? {|elt| elt % 2 == 0}
+puts [1, 4, 5, 99, "g"].all? (Numeric, String)
 puts "Testing my all..."
-puts [1, 5, 99, -5].my_all? {|el| el > 0}
+puts [1, nil, 5, 99, "g"].my_all? 
+puts [8, 4, 4, 2].my_all? {|elt| elt % 2 == 0}
+puts [1, 4, 5, 99, "g"].my_all? (Numeric)
+puts [1, 4, 5, 99, "g"].my_all? (Numeric, String)
