@@ -38,10 +38,20 @@ end
 #args = Proc.new={|obj| obj}
 def my_all?(*arg, &block)
   if arg.length == 1
-    i=0
-    while i < self.length
-      return false if self[i] != arg
-      i += 1
+    if arg[0].kind_of? Class
+      i=0
+      while i < self.length
+        return false if !self[i].kind_of? arg[0]
+        i += 1
+      end 
+      return true
+    else
+      i=0
+      while i < self.length
+        return false if self[i] != arg
+        i += 1
+      end
+      return true
     end
   end
 
@@ -54,8 +64,37 @@ def my_all?(*arg, &block)
   return true
 end
 
-def my_any?
+def my_any?(*arg, &block)
+  
+  if arg.length == 1
+    if arg[0].kind_of? Class
+      i=0
+      puts "arg[0] is: #{arg[0]}"
+      while i < self.length
+        return true if self[i].kind_of? arg[0]
+        i += 1
+      end 
+      return false
+    else
+      i=0
+      puts "arg[0] is: #{arg[0]}"
+      while i < self.length
+        return true if self[i] == arg
+        i += 1
+      end
+      return false
+    end
+  end
+
+  block = lambda{|obj| obj} unless block_given?
+  i=0
+  while i < self.length
+    return true if block.call(self[i])
+    i += 1
+  end
+  return false
 end
+
 def my_none?
 end
 def my_count
@@ -92,13 +131,23 @@ p [1,2,3,4].my_select { |elt| elt > 2 }
 =end
 
 # Test #my_all?
-puts [nil, true, 99].all?
-puts [1, nil, 5, 99, "g"].my_all? 
-puts [1, 4, 5, 99, "g"].all? (Numeric)
-puts [8, 4, 4, 2].all? {|elt| elt % 2 == 0}
-puts [1, 4, 5, 99, "g"].all? (Numeric, String)
+#puts [nil, true, 99].all?
+#puts [1, nil, 5, 99, "g"].my_all? 
+#puts [1, 4, 5, 99, "g"].all? (Numeric)
+#puts [8, 4, 4, 2].all? {|elt| elt % 2 == 0}
+# puts [1, 4, 5, 99, "g"].all? (Numeric, String)
 puts "Testing my all..."
-puts [1, nil, 5, 99, "g"].my_all? 
-puts [8, 4, 4, 2].my_all? {|elt| elt % 2 == 0}
-puts [1, 4, 5, 99, "g"].my_all? (Numeric)
-puts [1, 4, 5, 99, "g"].my_all? (Numeric, String)
+#puts [1, nil, 5, 99, "g"].my_all? 
+#puts [8, 4, 4, 2].my_all? {|elt| elt % 2 == 0}
+#puts [1, 4, 5, 99, "g"].my_all? (Numeric)
+# puts [1, 4, 5, 99, "g"].my_all? (Numeric, String)
+# puts "all? is: #{[5,3,6].all?(Block)}"
+# puts "my_all? is: #{[5,3,77].my_all?(Block)}"
+
+puts "Testing my any..."
+puts "any? is: #{[5,3,77].any?(Numeric)}"
+puts "my_any? is: #{[5,3,77].my_any?(Numeric)}"
+puts "any? is: #{[5,3,77,"f"].any?(String)}"
+puts "my_any? is: #{[5,3,77,"f"].my_any?(String)}"
+puts [7, 5, 1, 5].any? {|elt| elt % 2 == 0}
+puts [7, 5, 1, 5].my_any? {|elt| elt % 2 == 0}
