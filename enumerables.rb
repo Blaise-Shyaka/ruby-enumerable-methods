@@ -126,9 +126,12 @@ def my_map
 end
 
 def my_inject (*arg, &block)
+  # Thow an error unless we were given an array of integers
+
+  # Initialize a result variable to zero
+
   # Check if we were given one argument without a block
     # Check if it's not a symbol return
-    # Initialize a result variable to zero
 
     # Check if it's only a symbol 
       # Iterate the array of elements and apply (symbol)= to the result
@@ -136,8 +139,25 @@ def my_inject (*arg, &block)
     # end only symbol check
 
   # Check if we were given two arguments without a block
+    # Throw an error unless the first argument is an integer and the second is a symbol
+
     # Check if the first argument is an integer and the second is a symbol
-    
+      # Set the result variable equal to the first argument
+      # Iterate over the array and add its elements to the result variable
+      # return the result variable
+    #
+  
+  # Check if we were given a block
+    # Check if we have an argument and that the argument is an integer
+      # Set the result variable equal to argument
+      # Iterate over the array and add to the result variable the yield[elt]
+      # return the result
+    #
+
+    # Check if we only have a block
+      # Iterate over the array and add to the result variable the yield[elt]
+      # return the result
+    #    
 end
 
 def multiply_els
@@ -228,6 +248,7 @@ puts "Inject with an accumulator #{[1,2,3,4].inject(5) do |acc, elt| acc * elt e
 puts "Inject with a symbol and an initial value #{[1,2,3,4].inject(5, :+)}"
 puts "Inject with a symbol without initial value #{[1,2,3,4].inject(:+)}"
 puts "Inject with a symbol without initial value #{[1,2,3,4].inject(:+)}"
+puts "Inject with a symbol without initial value #{["a", "b", "c"].inject("d", :*)}"
 puts "Inject with an array as initial value and a symbol as a second argument #{[1,2,4].inject([3,4], :*)}" #(returns the argument array the number of times equal to the reduce value)
 puts "Inject on a string with an accumulator #{"line".inject("simple") do |acc, elt| acc * elt end}" #Returns a NoMethodError
 puts "Inject on a string with a symbol without initial value #{"line".inject(:+)}" #Returns a NoMethodError
