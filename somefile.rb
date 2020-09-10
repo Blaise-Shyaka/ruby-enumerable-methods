@@ -72,8 +72,8 @@ end
     #
     end
 
-    elsif block_given? 
-  # Check if we were given a block
+    elsif block_given?  # Check if we were given a block
+  
     # Check if we have an argument and that the argument is an integer
       # Set the result variable equal to argument
       # Iterate over the array and add to the result variable the yield[elt]
