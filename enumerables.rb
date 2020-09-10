@@ -1,19 +1,13 @@
 module Enumerable
 def my_each()
-  return "Error" unless block_given?
-
-  #puts "For started..."
+  return self unless self.kind_of? Array
+  return to_enum unless block_given?
   i=0
-  res=[]
-  while i<=self.length-1 #for i in 0..(self.length-2)
-    #puts "i is: #{i}"
-    res.push(yield(self[i]))
-    #puts i
+  while i<=self.length-1
+    yield(self[i])
     i+=1
   end
-  return res
-  #puts "For ended..."
-
+  return self
 end
 
 def my_each_with_index
@@ -35,13 +29,13 @@ def my_select
   end
   return object_to_return
 end
-#args = Proc.new={|obj| obj}
+
 def my_all?(*arg, &block)
   if arg.length == 1
     if arg[0].kind_of? Class
       i=0
       while i < self.length
-        return false if !self[i].kind_of? arg[0]
+        return false unless self[i].kind_of? arg[0]
         i += 1
       end 
       return true
@@ -58,14 +52,13 @@ def my_all?(*arg, &block)
   block = lambda{|obj| obj} unless block_given?
   i=0
   while i < self.length
-    return false if !block.call(self[i])
+    return false unless block.call(self[i])
     i += 1
   end
   return true
 end
 
 def my_any?(*arg, &block)
-  
   if arg.length == 1
     if arg[0].kind_of? Class
       i=0
@@ -107,7 +100,6 @@ def my_count(*arg, &block)
       end
       return count
   end
-
   block = lambda{|obj| obj} unless block_given?
   i=0
   while i < self.length
@@ -116,8 +108,23 @@ def my_count(*arg, &block)
   end
   return count
 end
+
 def my_map
+  res = []
+  if(self.kind_of? Range)
+    self.to_a.my_each {|elt| res.push(yield(elt))}
+    return res
+  end
+   #if self.kind_of? Range
+  return self unless self.kind_of? Array
+  return to_enum unless block_given?
+   
+  #elsif (self.kind_of? Array)
+  #end 
+  self.my_each {|elt| res.push(yield(elt))}
+  return res
 end
+
 def my_inject
 end
 
@@ -153,7 +160,7 @@ p [1,2,3,4].my_select { |elt| elt > 2 }
 #puts [1, 4, 5, 99, "g"].all? (Numeric)
 #puts [8, 4, 4, 2].all? {|elt| elt % 2 == 0}
 # puts [1, 4, 5, 99, "g"].all? (Numeric, String)
-puts "Testing my all..."
+#puts "Testing my all..."
 #puts [1, nil, 5, 99, "g"].my_all? 
 #puts [8, 4, 4, 2].my_all? {|elt| elt % 2 == 0}
 #puts [1, 4, 5, 99, "g"].my_all? (Numeric)
@@ -177,10 +184,28 @@ puts "Testing my all..."
 # puts [7, 5, 1, 5].none? {|elt| elt % 2 == 0}
 # puts [7, 5, 1, 5].my_none? {|elt| elt % 2 == 0}
 
+=begin 
 puts "Testing my_count..."
 puts "count is: #{[5,3,77].count(3)}"
 puts "my_count is: #{[5,3,77].my_count(3)}"
 puts "count is: #{[5,3,77,1].count do |elt| elt > 1 end}"
 puts "my_count is: #{[5,3,77,1].my_count do |elt| elt > 1 end}"
 puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
-puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric}
+puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric} 
+=end
+
+puts "Testing my_map..."
+puts "map is: #{(1..4).map do |i| i*i end}"
+puts "my_map is: #{(1..4).my_map do |i| i*i end }"
+
+puts "map is: #{[5,3,77,1].map}"
+puts "my_map is: #{[5,3,77,1].my_map}"
+#puts "map is: #{[1..4].each do |i| i*i end}"
+#puts "my_map is: #{[1..4].my_each do |i| i*i end }"
+puts "map is: #{[1,2,3,4].map do |i| i*i end}"
+puts "my_map is: #{[1,2,3,4].my_map do |i| i*i end}"
+puts "With strings..."
+#puts "map is: #{"something".map do |i| i*i end}"
+#puts "my_map is: #{"something".my_map do |i| i*i end}"
+#puts "map is: #{"Hello".map}"
+#puts "my_map is: #{'Hello'.my_map}"
