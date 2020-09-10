@@ -125,7 +125,19 @@ def my_map
   return res
 end
 
-def my_inject
+def my_inject (*arg, &block)
+  # Check if we were given one argument without a block
+    # Check if it's not a symbol return
+    # Initialize a result variable to zero
+
+    # Check if it's only a symbol 
+      # Iterate the array of elements and apply (symbol)= to the result
+      # Return result variable
+    # end only symbol check
+
+  # Check if we were given two arguments without a block
+    # Check if the first argument is an integer and the second is a symbol
+    
 end
 
 def multiply_els
@@ -194,18 +206,33 @@ puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
 puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric} 
 =end
 
-puts "Testing my_map..."
-puts "map is: #{(1..4).map do |i| i*i end}"
-puts "my_map is: #{(1..4).my_map do |i| i*i end }"
+# puts "Testing my_map..."
+# puts "map is: #{(1..4).map do |i| i*i end}"
+# puts "my_map is: #{(1..4).my_map do |i| i*i end }"
 
-puts "map is: #{[5,3,77,1].map}"
-puts "my_map is: #{[5,3,77,1].my_map}"
+# puts "map is: #{[5,3,77,1].map}"
+# puts "my_map is: #{[5,3,77,1].my_map}"
 #puts "map is: #{[1..4].each do |i| i*i end}"
 #puts "my_map is: #{[1..4].my_each do |i| i*i end }"
-puts "map is: #{[1,2,3,4].map do |i| i*i end}"
-puts "my_map is: #{[1,2,3,4].my_map do |i| i*i end}"
-puts "With strings..."
+# puts "map is: #{[1,2,3,4].map do |i| i*i end}"
+# puts "my_map is: #{[1,2,3,4].my_map do |i| i*i end}"
+# puts "With strings..."
 #puts "map is: #{"something".map do |i| i*i end}"
 #puts "my_map is: #{"something".my_map do |i| i*i end}"
 #puts "map is: #{"Hello".map}"
 #puts "my_map is: #{'Hello'.my_map}"
+
+puts "======= Testing my_inject"
+puts "Inject on an array of integers with an accumulator #{[1,2,3,4].inject do |acc, elt| acc * elt end}"
+puts "Inject with an accumulator #{[1,2,3,4].inject(5) do |acc, elt| acc * elt end}"
+puts "Inject with a symbol and an initial value #{[1,2,3,4].inject(5, :+)}"
+puts "Inject with a symbol without initial value #{[1,2,3,4].inject(:+)}"
+puts "Inject with a symbol without initial value #{[1,2,3,4].inject(:+)}"
+puts "Inject with an array as initial value and a symbol as a second argument #{[1,2,4].inject([3,4], :*)}" #(returns the argument array the number of times equal to the reduce value)
+puts "Inject on a string with an accumulator #{"line".inject("simple") do |acc, elt| acc * elt end}" #Returns a NoMethodError
+puts "Inject on a string with a symbol without initial value #{"line".inject(:+)}" #Returns a NoMethodError
+#puts "Inject without a block and argument #{[1,2,3,4].inject}" (Return Local JumpError no block given)
+#puts "My_inject with an integer as initial value #{[1,2,3,4].inject(4)}" (Return TypeError)
+#puts "My_inject with an array as initial value #{[1,2,3,4].inject([3,4,5,6])}" (Return a TypeError)
+#puts "Inject with a hash  without an accumulator:" print {score1: 5, score2: 3, score3: 10}.inject do |10, elt| elt + 5 end
+#puts "Inject with a hash  without an accumulator:" print {score1: 5, score2: 3, score3: 10}.inject do |elt| elt + 5 end
