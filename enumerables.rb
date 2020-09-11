@@ -126,6 +126,7 @@ def my_map
 end
 
 def my_inject (*arg, &block)
+  return raise ArgumentError.new "wrong number of arguments (given #{arg.length}, expected 0..2)" unless arg.length < 3
   return "Error" unless self.kind_of? Array
   result=0
   if !block_given?  
@@ -134,12 +135,10 @@ def my_inject (*arg, &block)
           our_sym=arg[0].to_s[0]
           result = self[0]
           i=1
-
           while i<self.length
               result=result.send(our_sym,self[i])
               i+=1
-          end
-          
+          end 
           return result
       end
       if arg.length == 2
@@ -158,7 +157,6 @@ def my_inject (*arg, &block)
       self.my_each { |el| result=yield(result,el) }
       return result
     end
-
     if arg.length == 0
       result = self[0]
       i=1
@@ -171,9 +169,10 @@ def my_inject (*arg, &block)
   end
 end
 
-def multiply_els
 end
 
+def multiply_els(arg)
+  return arg.my_inject {|acc,el| acc*=el}
 end
 
 puts [1,2,3,4].inject(:%)
@@ -181,11 +180,13 @@ puts [1,2,3,4].my_inject(:%)
 puts [1,2,3,4].inject(5, :/)
 puts [1,2,3,4].my_inject(5, :/)
 #puts [1,2,3,4].inject(5, 3, :/)
-puts [1,2,3,4].my_inject(5, 3, :/)
-puts [1,2,3,4].inject {|acc, elt| acc-= elt }
-puts [1,2,3,4].my_inject { |acc, elt| acc-= elt } 
-puts ["a", "b", "c", "d"].inject {|acc, elt| acc+= elt }
-puts ["a", "b", "c", "d"].my_inject { |acc, elt| acc+= elt } 
-puts "Testing my inject with a block and a single argument..."
+#puts "Testing my_inject with three arguments..."
+#puts [1,2,3,4].my_inject(5, 3, :/)
+#puts [1,2,3,4].my_inject()
+#puts [1,2,3,4].inject {|acc, elt| acc-= elt }
+#puts [1,2,3,4].my_inject { |acc, elt| acc-= elt } 
+#puts ["a", "b", "c", "d"].inject {|acc, elt| acc+= elt }
+#puts ["a", "b", "c", "d"].my_inject { |acc, elt| acc+= elt } 
+#puts "Testing my inject with a block and a single argument..."
 #puts [1,2,3,4].inject([1]) { |acc,el| acc%=el }
 #puts [1,2,3,4].my_inject([1]) { |acc,el| acc%=el }

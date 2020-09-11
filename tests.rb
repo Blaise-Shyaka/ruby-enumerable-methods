@@ -1,3 +1,4 @@
+require_relative 'enumerables.rb'
 # #Test #my_each
 # puts [3,5,67,23,4].my_each {|el| puts el}
 # puts "Built-in each..."
@@ -69,6 +70,7 @@
 # puts "my_map is: #{"something".my_map do |i| i*i end}"
 # puts "map is: #{"Hello".map}"
 # puts "my_map is: #{'Hello'.my_map}"
+
 # puts "======= Testing my_inject"
 # puts "Inject on an array of integers with an accumulator #{[1,2,3,4].inject do |acc, elt| acc * elt end}"
 # puts "Inject with an accumulator #{[1,2,3,4].inject(5) do |acc, elt| acc * elt end}"
@@ -76,10 +78,10 @@
 # puts "Inject with a symbol without initial value #{[1,2,3,4].inject(:+)}"
 # puts "Inject with a symbol without initial value #{[1,2,3,4].inject(:+)}"
 # puts "Inject with a symbol without initial value #{["a", "b", "c"].inject("d", :*)}"
-# puts "Inject with an array as initial value and a symbol as a second argument #{[1,2,4].inject([3,4], :*)}" #(returns the argument array the number of times equal to the reduce value)
+puts "Inject with an array as initial value and a symbol as a second argument #{[1,2,4].inject([3,4], :*)}" # # NOT SOLVED YET (returns the argument array the number of times equal to the reduce value)
+puts "Inject with an array as initial value and a symbol as a second argument #{[1,2,4].my_inject([3,4], :*)}"
 # puts "Inject on a string with an accumulator #{"line".inject("simple") do |acc, elt| acc * elt end}" #Returns a NoMethodError
 # puts "Inject on a string with a symbol without initial value #{"line".inject(:+)}" #Returns a NoMethodError
-
 # #puts "Inject without a block and argument #{[1,2,3,4].inject}" (Return Local JumpError no block given)
 # #puts "My_inject with an integer as initial value #{[1,2,3,4].inject(4)}" (Return TypeError)
 # #puts "My_inject with an array as initial value #{[1,2,3,4].inject([3,4,5,6])}" (Return a TypeError)
@@ -90,3 +92,19 @@
 # puts [1,2,3,4].my_inject(:%)
 # puts [1,2,3,4].inject(5, :*)
 # puts [1,2,3,4].my_inject(5, :*)
+# puts [1,2,3,4].inject(5, :/)
+# puts [1,2,3,4].my_inject(5, :/)
+#puts [1,2,3,4].inject(5, 3, :/)
+#puts "Testing my_inject with three arguments..."
+#puts [1,2,3,4].my_inject(5, 3, :/)
+#puts [1,2,3,4].my_inject()
+#puts [1,2,3,4].inject {|acc, elt| acc-= elt }
+#puts [1,2,3,4].my_inject { |acc, elt| acc-= elt } 
+#puts ["a", "b", "c", "d"].inject {|acc, elt| acc+= elt }
+#puts ["a", "b", "c", "d"].my_inject { |acc, elt| acc+= elt } 
+#puts "Testing my inject with a block and a single argument..."
+#puts [1,2,3,4].inject([1]) { |acc,el| acc%=el }
+#puts [1,2,3,4].my_inject([1]) { |acc,el| acc%=el }
+
+puts "Testing with multiply_els..."
+puts multiply_els([2,4,7,5])
