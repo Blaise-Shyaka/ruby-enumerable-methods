@@ -4,3 +4,5 @@ Metrics:
   Enabled: false
 Style:
   Enabled: false
+Layout/LineLength:
+  Enabled: false
