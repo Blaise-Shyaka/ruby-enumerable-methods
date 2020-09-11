@@ -11,65 +11,91 @@ require_relative 'enumerables.rb'
 # puts [3,5,67,23,4].each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer
 # puts [3,5,67,23,4].my_each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer (same as each)
 
- puts "======= Tests for my_each_with_index ======"
- puts "It should return the enumerable if no block given"
- puts "Built-in each_with_index..."
- puts [1,2,3,4].each_with_index
- puts "Our my_each_with_index..."
- puts [1,2,3,4].my_each_with_index
- puts "It should execute the code given in the block"
- puts "Built-in each_with_index..."
- puts [1,2,3,4].each_with_index { |val, index| val * index }
- puts "Our my_each_with_index..."
- puts [1,2,3,4].my_each_with_index { |val, index| val * index }
- puts "Now, with a hash..."
- puts "Built-in each_with_index"
- hash = Hash.new
-puts %w(cat dog wombat).each_with_index { |item, index|
-  hash[item] = index
-}
-puts hash   #=> {"cat"=>0, "dog"=>1, "wombat"=>2}
- puts "Our my_each_with_index"
- hash = Hash.new
- puts %w(cat dog wombat).my_each_with_index { |item, index|
-   hash[item] = index
- }
- puts hash   #=> {"cat"=>0, "dog"=>1, "wombat"=>2}
+#  puts "======= Tests for my_each_with_index ======"
+#  puts "It should return the enumerable if no block given"
+#  puts "Built-in each_with_index..."
+#  puts [1,2,3,4].each_with_index
+#  puts "Our my_each_with_index..."
+#  puts [1,2,3,4].my_each_with_index
+#  puts "It should execute the code given in the block"
+#  puts "Built-in each_with_index..."
+#  puts [1,2,3,4].each_with_index { |val, index| val * index }
+#  puts "Our my_each_with_index..."
+#  puts [1,2,3,4].my_each_with_index { |val, index| val * index }
+#  puts "Now, with a hash..."
+#  puts "Built-in each_with_index"
+#  hash = Hash.new
+# puts %w(cat dog wombat).each_with_index { |item, index|
+#   hash[item] = index
+# }
+# puts hash   #=> {"cat"=>0, "dog"=>1, "wombat"=>2}
+#  puts "Our my_each_with_index"
+#  hash = Hash.new
+#  puts %w(cat dog wombat).my_each_with_index { |item, index|
+#    hash[item] = index
+#  }
+#  puts hash   #=> {"cat"=>0, "dog"=>1, "wombat"=>2}
 
-puts "======= Tests for my_select ======"
- puts "It should return the enumerable if no block given"
- puts "Built-in select"
- puts [1,2,3,4].select
- puts "Our my_select"
- puts [1,2,3,4].my_select
- puts "It should execute the code given in the block"
- puts "Built-in select"
- puts [1,2,3,4].select { |elt| elt > 2 }
- puts "Our my_select"
- puts [1,2,3,4].my_select { |elt| elt > 2 }
- puts "More tests: It should select the elements that satisfy the condition in the block"
- puts "Built-in select"
- puts (1..10).select { |i|  i % 3 == 0 }   #=> [3, 6, 9]
- puts [1,2,3,4,5].select { |num|  num.even?  }   #=> [2, 4]
- puts [:foo, :bar].select{ |x| x == :foo }   #=> [:foo]
- puts "Our my_select"
- puts (1..10).my_select { |i|  i % 3 == 0 }   #=> [3, 6, 9]
- puts [1,2,3,4,5].my_select { |num|  num.even?  }   #=> [2, 4]
- puts [:foo, :bar].my_select{ |x| x == :foo }   #=> [:foo]
+# puts "======= Tests for my_select ======"
+#  puts "It should return the enumerable if no block given"
+#  puts "Built-in select"
+#  puts [1,2,3,4].select
+#  puts "Our my_select"
+#  puts [1,2,3,4].my_select
+#  puts "It should execute the code given in the block"
+#  puts "Built-in select"
+#  puts [1,2,3,4].select { |elt| elt > 2 }
+#  puts "Our my_select"
+#  puts [1,2,3,4].my_select { |elt| elt > 2 }
+#  puts "More tests: It should select the elements that satisfy the condition in the block"
+#  puts "Built-in select"
+#  puts (1..10).select { |i|  i % 3 == 0 }   #=> [3, 6, 9]
+#  puts [1,2,3,4,5].select { |num|  num.even?  }   #=> [2, 4]
+#  puts [:foo, :bar].select{ |x| x == :foo }   #=> [:foo]
+#  puts "Our my_select"
+#  puts (1..10).my_select { |i|  i % 3 == 0 }   #=> [3, 6, 9]
+#  puts [1,2,3,4,5].my_select { |num|  num.even?  }   #=> [2, 4]
+#  puts [:foo, :bar].my_select{ |x| x == :foo }   #=> [:foo]
 
-# Test #my_all?
+# puts "======= Tests for my_all ======"
+# puts "Built-in all?"
 # puts [nil, true, 99].all?
-# puts [1, nil, 5, 99, "g"].my_all? 
+# puts "Our my_all?"
+# puts [nil, true, 99].my_all?
+# puts "Built-in all?"
 # puts [1, 4, 5, 99, "g"].all? (Numeric)
-# puts [8, 4, 4, 2].all? {|elt| elt % 2 == 0}
-# #puts [1, 4, 5, 99, "g"].all? (Numeric, String)
-# puts "Testing my all..."
-# puts [1, nil, 5, 99, "g"].my_all? 
-# puts [8, 4, 4, 2].my_all? {|elt| elt % 2 == 0}
+# puts "Our my_all?"
 # puts [1, 4, 5, 99, "g"].my_all? (Numeric)
-# #puts [1, 4, 5, 99, "g"].my_all? (Numeric, String)
-# puts "all? is: #{[5,3,6].all?(Block)}"
-# puts "my_all? is: #{[5,3,77].my_all?(Block)}"
+# puts "Built-in all?"
+# puts [8, 4, 4, 2].all? {|elt| elt % 2 == 0}
+# puts "Our my_all?"
+# puts [8, 4, 4, 2].my_all? {|elt| elt % 2 == 0}
+# puts "Built-in all?"
+# puts %w[ant bear cat].all? { |word| word.length >= 3 } #=> true
+# puts %w[ant bear cat].all? { |word| word.length >= 4 } #=> false
+# puts %w[ant bear cat].all?(/t/)                        #=> false
+# puts [1, 2i, 3.14].all?(Numeric)                       #=> true
+# puts [nil, true, 99].all?                              #=> false
+# puts [].all?                                           #=> true
+# puts "Our my_all?"
+# puts %w[ant bear cat].my_all? { |word| word.length >= 3 } #=> true
+# puts %w[ant bear cat].my_all? { |word| word.length >= 4 } #=> false
+# puts %w[ant bear cat].my_all?(/t/)                        #=> false
+# puts [1, 2i, 3.14].my_all?(Numeric)                       #=> true
+# puts [nil, true, 99].my_all?                              #=> false
+# puts [].my_all?                                           #=> true
+# puts "Built-in all?"
+# puts [1, 4, 5, 99, "g"].all? (Numeric, String) #They throw an error
+# puts "Our my_all?"
+# puts [1, 4, 5, 99, "g"].my_all? (Numeric, String) #They throw an error
+# puts "Built-in all?"
+# puts "all? is: #{[5,3,6].all?(Block)}" #They throw a NameError
+# puts "Our my_all?"
+# puts "all? is: #{[5,3,6].my_all?(Block)}" #They throw a NameError
+
+
+
+
 
 # puts "Testing my any..."
 # puts "any? is: #{[5,3,77].any?(Numeric)}"
