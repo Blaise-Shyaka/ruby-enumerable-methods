@@ -12,17 +12,15 @@ end
 
 def my_each_with_index
   return to_enum unless block_given?
-
   object_to_return = []
   for i in 0...self.length
    object_to_return << yield(self[i], i)
   end
-  return object_to_return
+  return self
 end
 
 def my_select
   return to_enum unless block_given?
-
   object_to_return = []
   self.my_each do |element|
     object_to_return << element if yield(element)
@@ -48,7 +46,6 @@ def my_all?(*arg, &block)
       return true
     end
   end
-
   block = lambda{|obj| obj} unless block_given?
   i=0
   while i < self.length
@@ -76,7 +73,6 @@ def my_any?(*arg, &block)
       return false
     end
   end
-
   block = lambda{|obj| obj} unless block_given?
   i=0
   while i < self.length
@@ -115,12 +111,8 @@ def my_map
     self.to_a.my_each {|elt| res.push(yield(elt))}
     return res
   end
-   #if self.kind_of? Range
   return self unless self.kind_of? Array
   return to_enum unless block_given?
-   
-  #elsif (self.kind_of? Array)
-  #end 
   self.my_each {|elt| res.push(yield(elt))}
   return res
 end
@@ -157,7 +149,7 @@ def my_inject (*arg, &block)
       self.my_each { |el| result=yield(result,el) }
       return result
     end
-    if arg.length == 0
+    if arg.length.zero?
       result = self[0]
       i=1
       while i<self.length

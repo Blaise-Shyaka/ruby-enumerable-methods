@@ -1,15 +1,40 @@
 require_relative 'enumerables.rb'
-# #Test #my_each
-# puts [3,5,67,23,4].my_each {|el| puts el}
-# puts "Built-in each..."
-# puts [3,5,67,23,4].each {|el,el2| puts el+el2}
 
-# Test #my_each_with_index
-# puts "======= Tests for my_each_with_index ======"
-# puts "It should return the enumerable if no block given"
-# puts [1,2,3,4].my_each_with_index
-# puts "It should execute the code given in the block"
-# p [1,2,3,4].my_each_with_index { |val, index| val * index }
+# puts "======= Tests for my_each ======"
+# puts [3,5,67,23,4].my_each {|el,el2| puts el+el2}
+# puts "Built-in each: "
+# [ "a", "b", "c" ].each {|x| print x, " -- " }
+# puts ""
+# puts "my_each: "
+# [ "a", "b", "c" ].my_each {|x| print x, " -- " }
+# puts ""
+# puts [3,5,67,23,4].each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer
+# puts [3,5,67,23,4].my_each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer (same as each)
+
+ puts "======= Tests for my_each_with_index ======"
+ puts "It should return the enumerable if no block given"
+ puts "Built-in each_with_index..."
+ puts [1,2,3,4].each_with_index
+ puts "Our my_each_with_index..."
+ puts [1,2,3,4].my_each_with_index
+ puts "It should execute the code given in the block"
+ puts "Built-in each_with_index..."
+ puts [1,2,3,4].each_with_index { |val, index| val * index }
+ puts "Our my_each_with_index..."
+ puts [1,2,3,4].my_each_with_index { |val, index| val * index }
+ puts "Now, with a hash..."
+ puts "Built-in each_with_index"
+ hash = Hash.new
+puts %w(cat dog wombat).each_with_index { |item, index|
+  hash[item] = index
+}
+puts hash   #=> {"cat"=>0, "dog"=>1, "wombat"=>2}
+ puts "Our my_each_with_index"
+ hash = Hash.new
+ puts %w(cat dog wombat).my_each_with_index { |item, index|
+   hash[item] = index
+ }
+ puts hash   #=> {"cat"=>0, "dog"=>1, "wombat"=>2}
 
 # Test #my_select
 # puts "======= Tests for my_select ======"
@@ -71,6 +96,11 @@ require_relative 'enumerables.rb'
 # puts "map is: #{"Hello".map}"
 # puts "my_map is: #{'Hello'.my_map}"
 
+# puts "Testing my_map with a proc..."
+# my_proc = Proc.new {|el| el/=2}
+# puts [1,3,5].map(&my_proc)
+# puts "My_map with a proc..."
+# puts [1,3,5].my_map(&my_proc)
 # puts "======= Testing my_inject"
 # puts "Inject on an array of integers with an accumulator #{[1,2,3,4].inject do |acc, elt| acc * elt end}"
 # puts "Inject with an accumulator #{[1,2,3,4].inject(5) do |acc, elt| acc * elt end}"
@@ -78,8 +108,8 @@ require_relative 'enumerables.rb'
 # puts "Inject with a symbol without initial value #{[1,2,3,4].inject(:+)}"
 # puts "Inject with a symbol without initial value #{[1,2,3,4].inject(:+)}"
 # puts "Inject with a symbol without initial value #{["a", "b", "c"].inject("d", :*)}"
-puts "Inject with an array as initial value and a symbol as a second argument #{[1,2,4].inject([3,4], :*)}" # # NOT SOLVED YET (returns the argument array the number of times equal to the reduce value)
-puts "Inject with an array as initial value and a symbol as a second argument #{[1,2,4].my_inject([3,4], :*)}"
+# puts "Inject with an array as initial value and a symbol as a second argument #{[1,2,4].inject([3,4], :*)}" # # NOT SOLVED YET (returns the argument array the number of times equal to the reduce value)
+# puts "Inject with an array as initial value and a symbol as a second argument #{[1,2,4].my_inject([3,4], :*)}"
 # puts "Inject on a string with an accumulator #{"line".inject("simple") do |acc, elt| acc * elt end}" #Returns a NoMethodError
 # puts "Inject on a string with a symbol without initial value #{"line".inject(:+)}" #Returns a NoMethodError
 # #puts "Inject without a block and argument #{[1,2,3,4].inject}" (Return Local JumpError no block given)
@@ -106,5 +136,5 @@ puts "Inject with an array as initial value and a symbol as a second argument #{
 #puts [1,2,3,4].inject([1]) { |acc,el| acc%=el }
 #puts [1,2,3,4].my_inject([1]) { |acc,el| acc%=el }
 
-puts "Testing with multiply_els..."
-puts multiply_els([2,4,7,5])
+# puts "Testing with multiply_els..."
+# puts multiply_els([2,4,7,5])
