@@ -121,13 +121,40 @@ require_relative 'enumerables.rb'
 # puts [nil, true, 99].my_any?                              #=> true
 # puts [].my_any?                                           #=> false          
 
-# puts "Testing my_any..."
+# puts "======= Tests for my_any ======"
+
+# puts "Built-in none?"
 # puts "none? is: #{[5,3,77].none?(Numeric)}"
+# puts "Our my_none?"
 # puts "my_none? is: #{[5,3,77].my_none?(Numeric)}"
+# puts "Built-in none?"
 # puts "none? is: #{[5,3,77,"f"].none?(String)}"
+# puts "Our my_none?"
 # puts "my_none? is: #{[5,3,77,"f"].my_none?(String)}"
+# puts "Built-in none?"
 # puts [7, 5, 1, 5].none? {|elt| elt % 2 == 0}
+# puts "Our my_none?"
 # puts [7, 5, 1, 5].my_none? {|elt| elt % 2 == 0}
+# puts "Built-in none?"
+# puts %w{ant bear cat}.none? { |word| word.length == 5 } #=> true
+# puts %w{ant bear cat}.none? { |word| word.length >= 4 } #=> false
+# puts %w{ant bear cat}.none?(/d/)                        #=> true
+# puts [1, 3.14, 42].none?(Float)                         #=> false
+# puts [].none?                                           #=> true
+# puts [nil].none?                                        #=> true
+# puts [nil, false].none?                                 #=> true
+# puts [nil, false, true].none?                           #=> false
+# puts "Our my_none?"
+# puts %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
+# puts %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
+# puts %w{ant bear cat}.my_none?(/d/)                        #=> true
+# puts [1, 3.14, 42].my_none?(Float)                         #=> false
+# puts [].my_none?                                           #=> true
+# puts [nil].my_none?                                        #=> true
+# puts [nil, false].my_none?                                 #=> true
+# puts [nil, false, true].my_none?                           #=> false
+
+
 # puts "Testing my_count..."
 # puts "count is: #{[5,3,77].count(3)}"
 # puts "my_count is: #{[5,3,77].my_count(3)}"
