@@ -93,17 +93,33 @@ require_relative 'enumerables.rb'
 # puts "Our my_all?"
 # puts "all? is: #{[5,3,6].my_all?(Block)}" #They throw a NameError
 
-
-
-
-
-# puts "Testing my any..."
+# puts "======= Tests for my_any ======"
+# puts "Built-in any?"
 # puts "any? is: #{[5,3,77].any?(Numeric)}"
+# puts "Our my_any?"
 # puts "my_any? is: #{[5,3,77].my_any?(Numeric)}"
+# puts "Built-in any?"
 # puts "any? is: #{[5,3,77,"f"].any?(String)}"
+# puts "Our my_any?"
 # puts "my_any? is: #{[5,3,77,"f"].my_any?(String)}"
+# puts "Built-in any?"
 # puts [7, 5, 1, 5].any? {|elt| elt % 2 == 0}
+# puts "Our my_any?"
 # puts [7, 5, 1, 5].my_any? {|elt| elt % 2 == 0}
+# puts "Built-in any?"
+# puts %w[ant bear cat].any? { |word| word.length >= 3 } #=> true
+# puts %w[ant bear cat].any? { |word| word.length >= 4 } #=> true
+# puts %w[ant bear cat].any?(/d/)                        #=> false
+# puts [nil, true, 99].any?(Integer)                     #=> true
+# puts [nil, true, 99].any?                              #=> true
+# puts [].any?                                           #=> false
+# puts "Our my_any?"
+# puts %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
+# puts %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
+# puts %w[ant bear cat].my_any?(/d/)                        #=> false
+# puts [nil, true, 99].my_any?(Integer)                     #=> true
+# puts [nil, true, 99].my_any?                              #=> true
+# puts [].my_any?                                           #=> false          
 
 # puts "Testing my_any..."
 # puts "none? is: #{[5,3,77].none?(Numeric)}"
