@@ -1,2 +1,6 @@
 Style/CaseEquality:
   Enabled: false
+Metrics:
+  Enabled: false
+Style:
+  Enabled: false
