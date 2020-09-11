@@ -155,49 +155,49 @@ require_relative 'enumerables.rb'
 # puts [nil, false, true].my_none?                           #=> false
 
 
- puts "======= Tests for my_count ======"
- puts "Built-in count"
- puts [5,3,77].count(3)
- puts "Our count"
- puts [5,3,77].my_count(3)
- puts "Built-in count"
- puts [5,3,77,1].count { |elt| elt > 1 }
- puts "Our count"
- puts [5,3,77,1].my_count { |elt| elt > 1 }
- puts "Built-in count"
- puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
- puts "Our count"
- puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric}
- puts "Built-in count"
- puts [1, 2, 4, 2].count               #=> 4
- puts [1, 2, 4, 2].count(2)            #=> 2
- puts [1, 2, 4, 2].count{ |x| x%2==0 } #=> 3
- puts "Our count"
- puts [1, 2, 4, 2].my_count               #=> 4
- puts [1, 2, 4, 2].my_count(2)            #=> 2
- puts [1, 2, 4, 2].my_count{ |x| x%2==0 } #=> 3
+#  puts "======= Tests for my_count ======"
+#  puts "Built-in count"
+#  puts [5,3,77].count(3)
+#  puts "Our count"
+#  puts [5,3,77].my_count(3)
+#  puts "Built-in count"
+#  puts [5,3,77,1].count { |elt| elt > 1 }
+#  puts "Our count"
+#  puts [5,3,77,1].my_count { |elt| elt > 1 }
+#  puts "Built-in count"
+#  puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
+#  puts "Our count"
+#  puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric}
+#  puts "Built-in count"
+#  puts [1, 2, 4, 2].count               #=> 4
+#  puts [1, 2, 4, 2].count(2)            #=> 2
+#  puts [1, 2, 4, 2].count{ |x| x%2==0 } #=> 3
+#  puts "Our count"
+#  puts [1, 2, 4, 2].my_count               #=> 4
+#  puts [1, 2, 4, 2].my_count(2)            #=> 2
+#  puts [1, 2, 4, 2].my_count{ |x| x%2==0 } #=> 3
 
- puts "======= Tests for my_map ======"
- puts "When we pass a block and a range as an argument"
- puts "Built-in map"
- puts (1..4).map { |i| i*i }
- puts "Our my_map"
- puts (1..4).my_map { |i| i*i }
- puts "When we don't pass anything"
- puts "Built-in map"
- puts [5,3,77,1].map
- puts "Our my_map"
- puts [5,3,77,1].my_map
+#  puts "======= Tests for my_map ======"
+#  puts "When we pass a block and a range as an argument"
+#  puts "Built-in map"
+#  puts (1..4).map { |i| i*i }
+#  puts "Our my_map"
+#  puts (1..4).my_map { |i| i*i }
+#  puts "When we don't pass anything"
+#  puts "Built-in map"
+#  puts [5,3,77,1].map
+#  puts "Our my_map"
+#  puts [5,3,77,1].my_map
 # puts "When we pass a Range within an Array and a block" # They fail the same way
 # puts "Built-in map"
 # puts [1..4].map { |i| i*i }
 # puts "Our my_map"
 # puts [1..4].my_map { |i| i*i }
- puts "When we pass an Array and a Block"
- puts "Built-in map"
- puts [1,2,3,4].map { |i| i*i }
- puts "Our my_map"
- puts [1,2,3,4].my_map { |i| i*i }
+# puts "When we pass an Array and a Block"
+# puts "Built-in map"
+# puts [1,2,3,4].map { |i| i*i }
+# puts "Our my_map"
+# puts [1,2,3,4].my_map { |i| i*i }
 # puts "With strings..." #They fail the same way
 # puts "Built-in map"
 # puts "something".map { |i| i*i }
@@ -208,54 +208,96 @@ require_relative 'enumerables.rb'
 # puts "Hello".map
 # puts "Our my_map"
 # puts "Hello".my_map
- puts "Now, with a proc..."
- my_proc = Proc.new {|el| el/=2}
- puts "Built-in map"
- puts [1,3,5].map(&my_proc)
- puts "Our my_map"
- puts [1,3,5].my_map(&my_proc)
- puts "More tests..."
- puts "Built-in map"
- puts (1..4).map { |i| i*i }      #=> [1, 4, 9, 16]
- puts (1..4).map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
- puts "Our my_map"
- puts (1..4).my_map { |i| i*i }      #=> [1, 4, 9, 16]
- puts (1..4).my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
+# puts "Now, with a proc..."
+# my_proc = Proc.new {|el| el/=2}
+# puts "Built-in map"
+# puts [1,3,5].map(&my_proc)
+# puts "Our my_map"
+# puts [1,3,5].my_map(&my_proc)
+# puts "More tests..."
+# puts "Built-in map"
+# puts (1..4).map { |i| i*i }      #=> [1, 4, 9, 16]
+# puts (1..4).map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
+# puts "Our my_map"
+# puts (1..4).my_map { |i| i*i }      #=> [1, 4, 9, 16]
+# puts (1..4).my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
 
-# puts "======= Testing my_inject"
-# puts "Inject on an array of integers with an accumulator #{[1,2,3,4].inject do |acc, elt| acc * elt end}"
-# puts "Inject with an accumulator #{[1,2,3,4].inject(5) do |acc, elt| acc * elt end}"
-# puts "Inject with a symbol and an initial value #{[1,2,3,4].inject(5, :+)}"
-# puts "Inject with a symbol without initial value #{[1,2,3,4].inject(:+)}"
-# puts "Inject with a symbol without initial value #{[1,2,3,4].inject(:+)}"
-# puts "Inject with a symbol without initial value #{["a", "b", "c"].inject("d", :*)}"
-# puts "Inject with an array as initial value and a symbol as a second argument #{[1,2,4].inject([3,4], :*)}" # # NOT SOLVED YET (returns the argument array the number of times equal to the reduce value)
-# puts "Inject with an array as initial value and a symbol as a second argument #{[1,2,4].my_inject([3,4], :*)}"
-# puts "Inject on a string with an accumulator #{"line".inject("simple") do |acc, elt| acc * elt end}" #Returns a NoMethodError
-# puts "Inject on a string with a symbol without initial value #{"line".inject(:+)}" #Returns a NoMethodError
-# #puts "Inject without a block and argument #{[1,2,3,4].inject}" (Return Local JumpError no block given)
-# #puts "My_inject with an integer as initial value #{[1,2,3,4].inject(4)}" (Return TypeError)
-# #puts "My_inject with an array as initial value #{[1,2,3,4].inject([3,4,5,6])}" (Return a TypeError)
-# # puts "Inject with a hash  without an accumulator:" print {score1: 5, score2: 3, score3: 10}.inject do |10, elt| elt + 5 end
-# # puts "Inject with a hash  without an accumulator:" print {score1: 5, score2: 3, score3: 10}.inject do |elt| elt + 5 end
-# # puts "Inject on a string with a symbol without initial value #{[1,2,3,4].my_inject(:+)}" #Returns a NoMethodError
-# puts [1,2,3,4].inject(:%)
-# puts [1,2,3,4].my_inject(:%)
-# puts [1,2,3,4].inject(5, :*)
-# puts [1,2,3,4].my_inject(5, :*)
-# puts [1,2,3,4].inject(5, :/)
-# puts [1,2,3,4].my_inject(5, :/)
-#puts [1,2,3,4].inject(5, 3, :/)
-#puts "Testing my_inject with three arguments..."
-#puts [1,2,3,4].my_inject(5, 3, :/)
-#puts [1,2,3,4].my_inject()
-#puts [1,2,3,4].inject {|acc, elt| acc-= elt }
-#puts [1,2,3,4].my_inject { |acc, elt| acc-= elt } 
-#puts ["a", "b", "c", "d"].inject {|acc, elt| acc+= elt }
-#puts ["a", "b", "c", "d"].my_inject { |acc, elt| acc+= elt } 
-#puts "Testing my inject with a block and a single argument..."
-#puts [1,2,3,4].inject([1]) { |acc,el| acc%=el }
-#puts [1,2,3,4].my_inject([1]) { |acc,el| acc%=el }
+puts "======= Testing my_inject==========="
+
+puts "Built-in inject"
+puts [1,2,3,4].inject { |acc, elt| acc * elt}
+puts "Our my_inject"
+puts [1,2,3,4].my_inject { |acc, elt| acc * elt}
+puts "Built-in inject"
+puts [1,2,3,4].inject(5) { |acc, elt| acc * elt}
+puts "Our my_inject"
+puts [1,2,3,4].my_inject(5) { |acc, elt| acc * elt}
+puts "Built-in inject"
+puts [1,2,3,4].inject(5, :+)
+puts "Our my_inject"
+puts puts [1,2,3,4].my_inject(5, :+)
+puts "Built-in inject"
+puts [1,2,3,4].inject(:+)
+puts "Our my_inject"
+puts [1,2,3,4].my_inject(:+)
+puts "Built-in inject"
+# puts ["a", "b", "c"].inject("d", :*) # RETURN TypeError
+puts "Our my_inject"
+# puts ["a", "b", "c"].my_inject("d", :*) # RETURN TypeError
+puts "Built-in inject"
+puts [1,2,4].inject([3,4], :*) #NOT SOLVED YET (returns the argument array the number of times equal to the reduce value)
+puts "Our my_inject"
+puts [1,2,4].my_inject([3,4], :*)
+puts "Built-in inject"
+#puts {score1: 5, score2: 3, score3: 10}.inject { |elt| elt + 5 }
+puts "Our my_inject"
+#puts {score1: 5, score2: 3, score3: 10}.my_inject { |elt| elt + 5 }
+puts "Built-in inject"
+puts ["a", "b", "c", "d"].inject {|acc, elt| acc+= elt }
+puts "Our my_inject"
+puts ["a", "b", "c", "d"].my_inject { |acc, elt| acc+= elt }
+puts "Built-in inject"
+puts (5..10).inject { |sum, n| sum + n }            #=> 45
+puts (5..10).inject(1) { |product, n| product * n } #=> 151200
+longest = %w{ cat sheep bear }.inject do |memo, word|
+   memo.length > word.length ? memo : word
+end
+puts longest                                        #=> "sheep"
+puts "Our my_inject"
+puts (5..10).my_inject { |sum, n| sum + n }            #=> 45
+puts (5..10).my_inject(1) { |product, n| product * n } #=> 151200
+longest = %w{ cat sheep bear }.inject do |memo, word|
+   memo.length > word.length ? memo : word
+end
+puts longest                                        #=> "sheep"
+# puts "Built-in inject"
+# puts "line".inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
+# puts "Our my_inject"
+# puts "line".my_inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
+# puts "Built-in inject"
+# puts "line".inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
+# puts "Our my_inject"
+# puts "line".my_inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
+# puts "Built-in inject"
+# puts "line".inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
+# puts "Our my_inject"
+# puts "line".my_inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
+# puts "Built-in inject"
+# puts "line".inject(:+)" #Returns a NoMethodError
+# puts "Our my_inject"
+# puts "line".my_inject(:+)" #Returns a NoMethodError
+# puts "Built-in inject"
+# puts [1,2,3,4].inject (Return Local JumpError no block given)
+# puts "Our my_inject"
+# puts [1,2,3,4].my_inject (Return Local JumpError no block given)
+# puts "Built-in inject"
+# puts [1,2,3,4].inject(4) (Return TypeError)
+# puts "Our my_inject"
+# puts [1,2,3,4].my_inject(4) (Return TypeError)
+# puts "Built-in inject"
+# puts [1,2,3,4].inject([3,4,5,6]) (Return a TypeError)
+# puts "Our my_inject"
+# puts [1,2,3,4].inject([3,4,5,6]) (Return a TypeError) 
 
 # puts "Testing with multiply_els..."
 # puts multiply_els([2,4,7,5])
