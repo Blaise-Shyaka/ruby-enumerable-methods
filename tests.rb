@@ -155,35 +155,73 @@ require_relative 'enumerables.rb'
 # puts [nil, false, true].my_none?                           #=> false
 
 
-# puts "Testing my_count..."
-# puts "count is: #{[5,3,77].count(3)}"
-# puts "my_count is: #{[5,3,77].my_count(3)}"
-# puts "count is: #{[5,3,77,1].count do |elt| elt > 1 end}"
-# puts "my_count is: #{[5,3,77,1].my_count do |elt| elt > 1 end}"
-# puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
-# puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric} 
+ puts "======= Tests for my_count ======"
+ puts "Built-in count"
+ puts [5,3,77].count(3)
+ puts "Our count"
+ puts [5,3,77].my_count(3)
+ puts "Built-in count"
+ puts [5,3,77,1].count { |elt| elt > 1 }
+ puts "Our count"
+ puts [5,3,77,1].my_count { |elt| elt > 1 }
+ puts "Built-in count"
+ puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
+ puts "Our count"
+ puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric}
+ puts "Built-in count"
+ puts [1, 2, 4, 2].count               #=> 4
+ puts [1, 2, 4, 2].count(2)            #=> 2
+ puts [1, 2, 4, 2].count{ |x| x%2==0 } #=> 3
+ puts "Our count"
+ puts [1, 2, 4, 2].my_count               #=> 4
+ puts [1, 2, 4, 2].my_count(2)            #=> 2
+ puts [1, 2, 4, 2].my_count{ |x| x%2==0 } #=> 3
 
-# puts "Testing my_map..."
-# puts "map is: #{(1..4).map do |i| i*i end}"
-# puts "my_map is: #{(1..4).my_map do |i| i*i end }"
+ puts "======= Tests for my_map ======"
+ puts "When we pass a block and a range as an argument"
+ puts "Built-in map"
+ puts (1..4).map { |i| i*i }
+ puts "Our my_map"
+ puts (1..4).my_map { |i| i*i }
+ puts "When we don't pass anything"
+ puts "Built-in map"
+ puts [5,3,77,1].map
+ puts "Our my_map"
+ puts [5,3,77,1].my_map
+# puts "When we pass a Range within an Array and a block" # They fail the same way
+# puts "Built-in map"
+# puts [1..4].map { |i| i*i }
+# puts "Our my_map"
+# puts [1..4].my_map { |i| i*i }
+ puts "When we pass an Array and a Block"
+ puts "Built-in map"
+ puts [1,2,3,4].map { |i| i*i }
+ puts "Our my_map"
+ puts [1,2,3,4].my_map { |i| i*i }
+# puts "With strings..." #They fail the same way
+# puts "Built-in map"
+# puts "something".map { |i| i*i }
+# puts "Our my_map"
+# puts "something".my_map { |i| i*i }
+# puts "With a string and no arguments" #They fail the same way
+# puts "Built-in map"
+# puts "Hello".map
+# puts "Our my_map"
+# puts "Hello".my_map
+ puts "Now, with a proc..."
+ my_proc = Proc.new {|el| el/=2}
+ puts "Built-in map"
+ puts [1,3,5].map(&my_proc)
+ puts "Our my_map"
+ puts [1,3,5].my_map(&my_proc)
+ puts "More tests..."
+ puts "Built-in map"
+ puts (1..4).map { |i| i*i }      #=> [1, 4, 9, 16]
+ puts (1..4).map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
+ puts "Our my_map"
+ puts (1..4).my_map { |i| i*i }      #=> [1, 4, 9, 16]
+ puts (1..4).my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
 
-# puts "map is: #{[5,3,77,1].map}"
-# puts "my_map is: #{[5,3,77,1].my_map}"
-# puts "map is: #{[1..4].each do |i| i*i end}"
-# puts "my_map is: #{[1..4].my_each do |i| i*i end }"
-# puts "map is: #{[1,2,3,4].map do |i| i*i end}"
-# puts "my_map is: #{[1,2,3,4].my_map do |i| i*i end}"
-# puts "With strings..."
-# puts "map is: #{"something".map do |i| i*i end}"
-# puts "my_map is: #{"something".my_map do |i| i*i end}"
-# puts "map is: #{"Hello".map}"
-# puts "my_map is: #{'Hello'.my_map}"
-
-# puts "Testing my_map with a proc..."
-# my_proc = Proc.new {|el| el/=2}
-# puts [1,3,5].map(&my_proc)
-# puts "My_map with a proc..."
-# puts [1,3,5].my_map(&my_proc)
 # puts "======= Testing my_inject"
 # puts "Inject on an array of integers with an accumulator #{[1,2,3,4].inject do |acc, elt| acc * elt end}"
 # puts "Inject with an accumulator #{[1,2,3,4].inject(5) do |acc, elt| acc * elt end}"
