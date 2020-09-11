@@ -153,25 +153,20 @@ def my_inject (*arg, &block)
           return result
       end
   elsif block_given?
-        # Check if we have an argument and that the argument is an integer
-      # Set the result variable equal to argument
-      # Iterate over the array and add to the result variable the yield[elt]
-      # return the result
-    #
-
-    # Check if we only have a block
-      # Iterate over the array and add to the result variable the yield[elt]
-      # return the result
-    #  
     if (arg.length == 1) && (arg[0].kind_of? Integer)
       result = arg[0]
-      our_sym=arg[0].to_s[0]
-      i=0
-
       self.my_each { |el| result=yield(result,el) }
-
       return result
+    end
 
+    if arg.length == 0
+      result = self[0]
+      i=1
+      while i<self.length
+          result= yield(result, self[i])
+          i+=1
+      end
+      return result
     end
   end
 end
@@ -185,6 +180,12 @@ puts [1,2,3,4].inject(:%)
 puts [1,2,3,4].my_inject(:%)
 puts [1,2,3,4].inject(5, :/)
 puts [1,2,3,4].my_inject(5, :/)
+#puts [1,2,3,4].inject(5, 3, :/)
+puts [1,2,3,4].my_inject(5, 3, :/)
+puts [1,2,3,4].inject {|acc, elt| acc-= elt }
+puts [1,2,3,4].my_inject { |acc, elt| acc-= elt } 
+puts ["a", "b", "c", "d"].inject {|acc, elt| acc+= elt }
+puts ["a", "b", "c", "d"].my_inject { |acc, elt| acc+= elt } 
 puts "Testing my inject with a block and a single argument..."
 #puts [1,2,3,4].inject([1]) { |acc,el| acc%=el }
-puts [1,2,3,4].my_inject([1]) { |acc,el| acc%=el }
+#puts [1,2,3,4].my_inject([1]) { |acc,el| acc%=el }
