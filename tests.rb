@@ -36,12 +36,26 @@ puts hash   #=> {"cat"=>0, "dog"=>1, "wombat"=>2}
  }
  puts hash   #=> {"cat"=>0, "dog"=>1, "wombat"=>2}
 
-# Test #my_select
-# puts "======= Tests for my_select ======"
-# puts "It should return the enumerable if no block given"
-# puts [1,2,3,4].my_select
-# puts "It should execute the code given in the block"
-# p [1,2,3,4].my_select { |elt| elt > 2 } 
+puts "======= Tests for my_select ======"
+ puts "It should return the enumerable if no block given"
+ puts "Built-in select"
+ puts [1,2,3,4].select
+ puts "Our my_select"
+ puts [1,2,3,4].my_select
+ puts "It should execute the code given in the block"
+ puts "Built-in select"
+ puts [1,2,3,4].select { |elt| elt > 2 }
+ puts "Our my_select"
+ puts [1,2,3,4].my_select { |elt| elt > 2 }
+ puts "More tests: It should select the elements that satisfy the condition in the block"
+ puts "Built-in select"
+ puts (1..10).select { |i|  i % 3 == 0 }   #=> [3, 6, 9]
+ puts [1,2,3,4,5].select { |num|  num.even?  }   #=> [2, 4]
+ puts [:foo, :bar].select{ |x| x == :foo }   #=> [:foo]
+ puts "Our my_select"
+ puts (1..10).my_select { |i|  i % 3 == 0 }   #=> [3, 6, 9]
+ puts [1,2,3,4,5].my_select { |num|  num.even?  }   #=> [2, 4]
+ puts [:foo, :bar].my_select{ |x| x == :foo }   #=> [:foo]
 
 # Test #my_all?
 # puts [nil, true, 99].all?

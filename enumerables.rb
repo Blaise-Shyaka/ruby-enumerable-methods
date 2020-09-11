@@ -22,6 +22,10 @@ end
 def my_select
   return to_enum unless block_given?
   object_to_return = []
+  if(self.kind_of? Range)
+    self.to_a.my_each {|elt| object_to_return.push(elt) if yield(elt)}
+    return object_to_return
+  end
   self.my_each do |element|
     object_to_return << element if yield(element)
   end
