@@ -21,7 +21,7 @@ require_relative 'enumerables.rb'
 # puts "Built-in each: for hashes"
 # puts "When the block has zero parameters"
 # my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-# puts my_hash.each { 
+# puts my_hash.each {
 #     puts "Without parameter..."
 # }
 # puts "Our each ... for hashes"
@@ -54,8 +54,6 @@ require_relative 'enumerables.rb'
 # for i in 0...my_hash.length - 1
 #    {|key, value| puts key }
 # end
-
-
 # puts "======= Tests for my_each_with_index ======"
 # puts "It should return the enumerable if no block given"
 # puts "Built-in each_with_index..."
@@ -201,8 +199,6 @@ require_relative 'enumerables.rb'
 # puts [nil].my_none?                                        #=> true
 # puts [nil, false].my_none?                                 #=> true
 # puts [nil, false, true].my_none?                           #=> false
-
-
 #  puts "======= Tests for my_count ======"
 #  puts "Built-in count"
 #  puts [5, 3, 77].count(3)
@@ -280,8 +276,7 @@ require_relative 'enumerables.rb'
 # puts (1..4).my_map { |i| i*i }      #=> [1, 4, 9, 16]
 # puts (1..4).my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
 
-puts"======= Testing my_inject==========="
-
+# puts"======= Testing my_inject==========="
 # puts"Built-in inject"
 # puts [1, 2, 3, 4].inject { |acc, elt| acc * elt } #24
 # puts"Our my_inject"
@@ -313,13 +308,13 @@ puts"======= Testing my_inject==========="
 # puts my_hash.inject { puts "Testing..." } # score1 5, 2 times
 # puts  my_hash.inject { puts "Testing"+5 } # no implicit conversion of Integer into String (TypeError)
 # puts "Our my_inject"
-# my_hash = {score1: 5, score2: 3, score3: 10} 
+# my_hash = {score1: 5, score2: 3, score3: 10}
 # puts my_hash.my_inject { puts "Testing..." } # score1 5, 2 times
 # puts  my_hash.my_inject { puts "Testing"+5 } # no implicit conversion of Integer into Array (TypeError)
 
 # puts "When the block has a single argument (block.arity=1)"
 # puts "Built-in inject"
-# my_hash = {score1: 5, score2: 3, score3: 10} 
+# my_hash = {score1: 5, score2: 3, score3: 10}
 # puts my_hash.inject { |elt| puts elt } # score1 5
 # puts  my_hash.inject { |elt| elt + 5 } # no implicit conversion of Integer into Array (TypeError)
 # puts "Our my_inject"
