@@ -1,34 +1,33 @@
 module Enumerable
   def my_each(&block)
-
     return to_enum unless block_given?
-    
+
     i = 0
     if is_a? Range
       iterable_array = self.to_a
     elsif is_a? Array
       iterable_array = self
     elsif is_a? Hash
-      iterable_array=self.to_a
+      iterable_array = self.to_a
       if block.arity == 0
         yield
       elsif block.arity == 1
-        i=0
-        while i<iterable_array.length
+        i = 0
+        while i < iterable_array.length
           yield(iterable_array[i])
-          i+=1
+          i += 1
         end
         return self
-      elsif block.arity >=2
+      elsif block.arity >= 2
         i = 0
         while i < iterable_array.length
           yield(iterable_array[i][0], iterable_array[i][1])
-          i+=1
-        end       
+          i += 1
+        end
       end
       self
     end
-    
+
     while i <= iterable_array.length - 1
       yield(iterable_array[i])
       i += 1
@@ -97,6 +96,7 @@ module Enumerable
       if arg[0].is_a? Class
         while i < length
           return true if self[i].is_a? arg[0]
+
           i += 1
         end
       else
@@ -163,14 +163,14 @@ module Enumerable
     res
   end
 
-  def my_inject(*arg)
-    return raise LocalJumpError.new "No block given" if (arg.length == 0) && (!block_given?) 
+  def my_inject(*arg,&block)
+    return raise LocalJumpError.new "No block given" if (arg.length == 0) && (!block_given?)
 
     if arg.length > 2
       return ArgumentError.new "wrong number of arguments (given #{arg.length}, expected 0..2)"
     end
 
-    return 'Error' unless (is_a? Array) || (is_a? Range)
+    #return 'Error' unless (is_a? Array) || (is_a? Range)
 
     result = 0
     if !block_given?
@@ -178,7 +178,7 @@ module Enumerable
       return if is_a? Range
 
       if arg.length == 1
-        return unless arg[0].is_a? Symbol # Check if it's only a symbol
+        return TypeError.new "#{arg[0]} is not a symbol nor a string" unless (arg[0].is_a? Symbol) || (arg[0].is_a? String)  # Check if it's only a symbol
 
         our_sym = arg[0].to_s[0]
         result = self[0]
@@ -200,6 +200,9 @@ module Enumerable
         return result
       end
     elsif block_given?
+      if (arg.length == 1) && (arg[0].is_a? Regexp)
+          return raise NoMethodError.new "undefined method for #{arg.to_s}"
+      end
       if (arg.length == 1) && (arg[0].is_a? Integer)
         if is_a? Range
           result = to_a
@@ -234,12 +237,47 @@ module Enumerable
             i += 1
           end
           return result
+        elsif is_a? Hash
+          iterable_array = self.to_a
+          acc = iterable_array[0]
+          i = 1
+          #puts "Block.arity is: #{block.arity}, acc is #{acc}"
+          if block.arity == 0
+            while i < iterable_array.length
+              #puts iterable_array
+              #puts "Inside while, i is: #{i}, iterable_array[i] is: #{iterable_array[i]}"
+              yield(acc,iterable_array[i])
+              #puts "In here..."
+              #puts "acc is: #{acc}"
+              i+=1
+            end
+            return #"Acc is: #{acc}"
+            
+          elsif block.arity == 1
+            
+            while i < iterable_array.length
+              #puts "acc is #{acc}, i is: #{i}, iterable_array is: #{iterable_array}, iterable_array[i] is: #{iterable_array[i]}"
+              yield(acc, iterable_array[i])
+              i += 1
+            end
+            return acc
+          elsif block.arity >= 2
+            i = 1
+            acc = iterable_array[0]
+            while i < iterable_array.length
+              #puts "Inside while..."
+              #puts "iterable_array[i] is: #{iterable_array[i]}"
+              acc = yield(acc, iterable_array[i])
+              i += 1
+            end
+          end
+          return acc
         end
       end
     end
   end
-end
 
+end
 def multiply_els(arg)
   arg.my_inject { |acc, el| acc * el }
 end

@@ -283,9 +283,9 @@ require_relative 'enumerables.rb'
 puts"======= Testing my_inject==========="
 
 # puts"Built-in inject"
-# puts[1, 2, 3, 4].inject { |acc, elt| acc * elt } #undefined method `[]' for nil:NilClass (NoMethodError)
+# puts [1, 2, 3, 4].inject { |acc, elt| acc * elt } #24
 # puts"Our my_inject"
-# puts[1, 2, 3, 4].my_inject { |acc, elt| acc * elt } #undefined method `[]' for nil:NilClass (NoMethodError)
+# puts [1, 2, 3, 4].my_inject { |acc, elt| acc * elt } #24
 # puts"Built-in inject"
 # puts[1, 2, 3, 4].inject(5) { |acc, elt| acc * elt } #undefined method `[]' for nil:NilClass (NoMethodError)
 # puts"Our my_inject"
@@ -299,17 +299,41 @@ puts"======= Testing my_inject==========="
 # puts"Our my_inject"
 # puts[1, 2, 3, 4].my_inject(:+) # undefined method `[]' for nil:NilClass (NoMethodError)
 # puts"Built-in inject"
-# puts["a", "b", "c"].inject("d", :*) # Returns TypeError
+# puts["a", "b", "c"].inject("d", :*) # undefined method `[]' for nil:NilClass (NoMethodError)
 # puts"Our my_inject"
-# puts ["a", "b", "c"].my_inject("d", :*) # Returns TypeError
+# puts ["a", "b", "c"].my_inject("d", :*) # Returns TypeError *****BUG******
 # puts "Built-in inject"
-puts [1, 2, 4].inject([3,4], :*) # Returns the argument array the number of times equal to the reduced value)
-puts "Our my_inject"
-puts [1, 2, 4].my_inject([3,4], :*)
+# puts [1, 2, 4].inject([3,4], :*) # Returns the argument array the number of times equal to the reduced value
+# puts "Our my_inject"
+# puts [1, 2, 4].my_inject([3,4], :*) # Returns the argument array the number of times equal to the reduced value
+ puts "When passing a block and a hash"
+# puts "When the block has no arguments (block.arity=0)"
+# puts "Built-in inject"
+# my_hash = {score1: 5, score2: 3, score3: 10}
+# puts my_hash.inject { puts "Testing..." } # score1 5, 2 times
+# puts  my_hash.inject { puts "Testing"+5 } # no implicit conversion of Integer into String (TypeError)
+# puts "Our my_inject"
+# my_hash = {score1: 5, score2: 3, score3: 10} 
+# puts my_hash.my_inject { puts "Testing..." } # score1 5, 2 times
+# puts  my_hash.my_inject { puts "Testing"+5 } # no implicit conversion of Integer into Array (TypeError)
+
+# puts "When the block has a single argument (block.arity=1)"
+# puts "Built-in inject"
+# my_hash = {score1: 5, score2: 3, score3: 10} 
+# puts my_hash.inject { |elt| puts elt } # score1 5
+# puts  my_hash.inject { |elt| elt + 5 } # no implicit conversion of Integer into Array (TypeError)
+# puts "Our my_inject"
+# my_hash = {score1: 5, score2: 3, score3: 10}
+# puts my_hash.my_inject { |elt| elt } #BUG: Returns NIL. Should return: score1 5
+# puts  my_hash.my_inject { |elt| elt + 5 } # no implicit conversion of Integer into Array (TypeError)
+puts "When the block has two arguments (block.arity=2)"
+puts "With a hash"
 puts "Built-in inject"
-# puts {score1: 5, score2: 3, score3: 10}.inject { |elt| elt + 5 }
+my_hash = {score1: 5, score2: 3, score3: 10}
+my_arr = [1,2,3,4]
+# puts my_arr.inject(/d/) #{ |acc, elt| acc += elt }
 puts "Our my_inject"
-# puts {score1: 5, score2: 3, score3: 10}.my_inject { |elt| elt + 5 }
+puts my_hash.my_inject(/d/) { |acc, elt| acc += elt }
 puts "Built-in inject"
 puts ["a", "b", "c", "d"].inject { |acc, elt| acc += elt }
 puts "Our my_inject"
@@ -327,34 +351,33 @@ puts (5..10).my_inject(1) { |product, n| product * n } #=> 151200
 longest = %w{ cat sheep bear }.inject do |memo, word|
 memo.length > word.length ? memo : word
 end
-puts longest #=> "sheep"
-# puts "Built-in inject"
-# puts [1, 3, 78, 90, 3].inject
+# puts longest #=> "sheep"# puts "Built-in inject"
+# puts [1, 3, 78, 90, 3].inject  #Returns LocalJumpError: no block given
 # puts "Our my_inject"
-# puts [1, 3, 78, 90, 3].my_inject
+# puts [1, 3, 78, 90, 3].my_inject #Returns LocalJumpError: no block given
 puts "=====symbol as argument ======"
 puts "Built-in inject"
 p [1, 3, 78, 90, 3].inject(:+)
 puts "Our my_inject"
 p [1, 3, 78, 90, 3].my_inject(:+)
-# puts "Built-in inject"
-# puts "line".inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
+ puts "Built-in inject"
+# puts "line".inject("simple") { |acc, elt| acc * elt}  # Returns a NoMethodError: undefined method 'inject' for "line":String
 # puts "Our my_inject"
-# puts "line".my_inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
+# puts "line".my_inject("simple") { |acc, elt| acc * elt}  # Returns a NoMethodError: undefined method 'inject' for "line":String
 # puts "Built-in inject"
-# puts "line".inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
-# puts "Our my_inject"
-# puts "line".my_inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
+# puts "line".inject("simple") { |acc, elt| acc * elt}  #Returns a NoMethodError
+ puts "Our my_inject"
+# puts "line".my_inject("simple") { |acc, elt| acc * elt}  #Returns a NoMethodError
 # puts "Built-in inject"
-# puts "line".inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
+# puts "line".inject("simple") { |acc, elt| acc * elt}  #Returns a NoMethodError
 # puts "Our my_inject"
 # puts "line".my_inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
 # puts "Built-in inject"
 # puts "line".inject(:+)" #Returns a NoMethodError
 # puts "Our my_inject"
-# puts "line".my_inject(:+)" #Returns a NoMethodError
-# puts "Built-in inject"
-# puts [1, 2, 3, 4].inject (Returns Local JumpError no block given)
+# puts "line".my_inject(:+) #Returns a NoMethodError
+ puts "Built-in inject"
+ puts [1, 2, 3, 4].inject (Returns Local JumpError no block given)
 # puts "Our my_inject"
 # puts [1, 2, 3, 4].my_inject (Returns Local JumpError no block given)
 # puts "Built-in inject"
