@@ -1,15 +1,32 @@
 module Enumerable
-  def my_each
+  def my_each(&block)
 
     return to_enum unless block_given?
     
     i = 0
-    if self.is_a? Range
+    if is_a? Range
       iterable_array = self.to_a
-    elsif self.is_a? Array
+    elsif is_a? Array
       iterable_array = self
-    else
-      return
+    elsif is_a? Hash
+      iterable_array=self.to_a
+      if block.arity == 0
+        yield
+      elsif block.arity == 1
+        i=0
+        while i<iterable_array.length
+          yield(iterable_array[i])
+          i+=1
+        end
+        return self
+      elsif block.arity >=2
+        i = 0
+        while i < iterable_array.length
+          yield(iterable_array[i][0], iterable_array[i][1])
+          i+=1
+        end       
+      end
+      self
     end
     
     while i <= iterable_array.length - 1

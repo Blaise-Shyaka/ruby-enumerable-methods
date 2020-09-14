@@ -17,20 +17,44 @@ puts Range.new(5, 50).each(&new_proc)
 puts "Our each ..."
 new_proc = proc { |num| num < (0 + 9) / 2 }
 puts Range.new(5, 50).my_each(&new_proc)
+puts "With each..."
 puts "Built-in each: for hashes"
+puts "When the block has zero parameters"
+my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+puts my_hash.each { 
+    puts "Without parameter..."
+}
+puts "Our each ... for hashes"
+my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+puts my_hash.my_each {
+    puts "Without parameter..."
+}
+puts "When the block has one parameter"
+my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+puts my_hash.each { |key|
+    puts "Key is: #{key*2}"
+}
+puts "Our each ... for hashes"
+my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+puts my_hash.my_each { |key|
+    puts "Key is: #{key*2}"
+}
+puts "When the block has two parameters"
 my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
 puts my_hash.each { |key, value|
-    puts value * 2
+    puts "Key is: #{key}, value is: #{value*2}"
 }
 puts "Our each ... for hashes"
 my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
 puts my_hash.my_each { |key, value|
-    puts value * 2
+puts "Key is: #{key}, value is: #{value*2}"
 }
-puts my_hash
-for i in 0...my_hash.length do |key, value|
-    puts key
-end
+
+puts "With a for loop..."
+#for i in 0...my_hash.length - 1
+#    {|key, value| puts key }
+#end
+
 
 # puts "======= Tests for my_each_with_index ======"
 # puts "It should return the enumerable if no block given"
