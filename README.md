@@ -1,6 +1,15 @@
 # Advanced Building Blocks: Ruby-Enumerable-methods
 
-Welcome to our project "Advanced Building Blocks:Enumerable Methods". The purpose of this project was to develop our own implementation of some of the Enumerable methods such as `each`, `each_with_index`, `map`, `inject`,`none?`,`count`, `all?`, `any?` and `select`.
+Welcome to our project "Advanced Building Blocks:Enumerable Methods". The purpose of this project was to develop our own implementation of some of the Enumerable methods such as:
+- `each`
+- `each_with_index`
+- `map`
+- `inject`
+- `none?`
+- `count`
+- `all?`
+- `any?`
+- `select`.
 
 ## Built With
 
