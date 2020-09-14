@@ -1,12 +1,19 @@
 module Enumerable
   def my_each
-    return unless is_a? Array
 
     return to_enum unless block_given?
-
+    
     i = 0
-    while i <= length - 1
-      yield(self[i])
+    if self.is_a? Range
+      iterable_array = self.to_a
+    elsif self.is_a? Array
+      iterable_array = self
+    else
+      return
+    end
+    
+    while i <= iterable_array.length - 1
+      yield(iterable_array[i])
       i += 1
     end
     self

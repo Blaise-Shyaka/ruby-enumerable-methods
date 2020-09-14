@@ -1,16 +1,36 @@
 require_relative 'enumerables.rb'
 
-# puts "======= Tests for my_each ======"
-# puts "Built-in each: "
-# ["a", "b", "c"].each { |x| print x, " -- " }
-# puts ""
-# puts "my_each: "
-# [ "a", "b", "c" ].my_each { |x| print x, " -- " }
-# puts ""
-# puts "Built-in each: "
-# puts [3, 5, 67, 23, 4].each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer
-# puts "Our my_each: "
-# puts [3, 5, 67, 23, 4].my_each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer (same as each)
+puts "======= Tests for my_each ======"
+puts "Built-in each: "
+["a", "b", "c"].each { |x| print x, " -- " }
+puts ""
+puts "my_each: "
+[ "a", "b", "c" ].my_each { |x| print x, " -- " }
+puts ""
+puts "Built-in each: "
+#puts [3, 5, 67, 23, 4].each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer
+puts "Our my_each: "
+#puts [3, 5, 67, 23, 4].my_each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer (same as each)
+puts "Built-in each: "
+new_proc = proc { |num| num < (0 + 9) / 2 }
+puts Range.new(5, 50).each(&new_proc)
+puts "Our each ..."
+new_proc = proc { |num| num < (0 + 9) / 2 }
+puts Range.new(5, 50).my_each(&new_proc)
+puts "Built-in each: for hashes"
+my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+puts my_hash.each { |key, value|
+    puts value * 2
+}
+puts "Our each ... for hashes"
+my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+puts my_hash.my_each { |key, value|
+    puts value * 2
+}
+puts my_hash
+for i in 0...my_hash.length do |key, value|
+    puts key
+end
 
 # puts "======= Tests for my_each_with_index ======"
 # puts "It should return the enumerable if no block given"
