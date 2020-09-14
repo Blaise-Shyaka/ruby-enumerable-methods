@@ -126,19 +126,24 @@ module Enumerable
 
   def my_count(*arg, &block)
     count = 0
+    if is_a? Range
+      iterable_array = to_a
+    else
+      iterable_array = self
+    end
     if arg.length == 1
       i = 0
-      while i < length
-        count += 1 if self[i] == arg[0]
+      while i < iterable_array.length
+        count += 1 if iterable_array[i] == arg[0]
         i += 1
       end
-      count
+      return count
     end
     block = lambda { |obj| obj } unless block_given?
 
     i = 0
-    while i < length
-      count += 1 if block.call(self[i])
+    while i < iterable_array.length
+      count += 1 if block.call(iterable_array[i])
       i += 1
     end
     count

@@ -202,27 +202,41 @@ require_relative 'enumerables.rb'
 # puts [nil, false].my_none?                                 #=> true
 # puts [nil, false, true].my_none?                           #=> false
 
-# puts "======= Tests for my_count ======"
-# puts "Built-in count"
-# puts [5, 3, 77].count(3)
-# puts "Our count"
-# puts [5, 3, 77].my_count(3)
-# puts "Built-in count"
-# puts [5, 3, 77, 1].count { |elt| elt > 1 }
-# puts "Our count"
-# puts [5, 3, 77, 1].my_count { |elt| elt > 1 }
-# puts "Built-in count"
-# puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
-# puts "Our count"
-# puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric}
-# puts "Built-in count"
-# puts [1, 2, 4, 2].count               #=> 4
-# puts [1, 2, 4, 2].count(2)            #=> 2
-# puts [1, 2, 4, 2].count{ |x| x%2==0 } #=> 3
-# puts "Our count"
-# puts [1, 2, 4, 2].my_count               #=> 4
-# puts [1, 2, 4, 2].my_count(2)            #=> 2
-# puts [1, 2, 4, 2].my_count{ |x| x%2==0 } #=> 3
+
+ puts "======= Tests for my_count ======"
+ puts "Built-in count"
+ puts [5, 3, 77].count(3)
+ puts "Our count"
+ puts [5, 3, 77].my_count(3)
+ puts "Built-in count"
+ puts [5, 3, 77, 1].count { |elt| elt > 1 }
+ puts "Our count"
+ puts [5, 3, 77, 1].my_count { |elt| elt > 1 }
+ puts "Built-in count"
+ puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
+ puts "Our count"
+ puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric}
+ puts "Built-in count"
+ puts [1, 2, 4, 2].count               #=> 4
+ puts [1, 2, 4, 2].count(2)            #=> 2
+ puts [1, 2, 4, 2].count{ |x| x%2==0 } #=> 3
+ puts "Our count"
+ puts [1, 2, 4, 2].my_count               #=> 4
+ puts [1, 2, 4, 2].my_count(2)            #=> 2
+ puts [1, 2, 4, 2].my_count{ |x| x%2==0 } #=> 3
+ puts "Testing with a range"
+ puts "Built-in count"
+ puts (5..50).count               #=> 46
+ puts "Our count"
+ puts (5..50).my_count               #=> 46
+ puts "When passing an integer"
+ puts "Built-in count"
+ puts [1, 3, 78, 90, 3].count(3)             #=> 2
+ puts "Our count"
+ puts [1, 3, 78, 90, 3].count(3)             #=> 2
+
+
+
 
 # pputs "======= Tests for my_map ======"
 # puts "When we pass a block and a range as an argument"
