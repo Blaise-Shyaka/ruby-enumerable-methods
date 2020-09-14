@@ -203,40 +203,37 @@ require_relative 'enumerables.rb'
 # puts [nil, false, true].my_none?                           #=> false
 
 
- puts "======= Tests for my_count ======"
- puts "Built-in count"
- puts [5, 3, 77].count(3)
- puts "Our count"
- puts [5, 3, 77].my_count(3)
- puts "Built-in count"
- puts [5, 3, 77, 1].count { |elt| elt > 1 }
- puts "Our count"
- puts [5, 3, 77, 1].my_count { |elt| elt > 1 }
- puts "Built-in count"
- puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
- puts "Our count"
- puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric}
- puts "Built-in count"
- puts [1, 2, 4, 2].count               #=> 4
- puts [1, 2, 4, 2].count(2)            #=> 2
- puts [1, 2, 4, 2].count{ |x| x%2==0 } #=> 3
- puts "Our count"
- puts [1, 2, 4, 2].my_count               #=> 4
- puts [1, 2, 4, 2].my_count(2)            #=> 2
- puts [1, 2, 4, 2].my_count{ |x| x%2==0 } #=> 3
- puts "Testing with a range"
- puts "Built-in count"
- puts (5..50).count               #=> 46
- puts "Our count"
- puts (5..50).my_count               #=> 46
- puts "When passing an integer"
- puts "Built-in count"
- puts [1, 3, 78, 90, 3].count(3)             #=> 2
- puts "Our count"
- puts [1, 3, 78, 90, 3].count(3)             #=> 2
-
-
-
+#  puts "======= Tests for my_count ======"
+#  puts "Built-in count"
+#  puts [5, 3, 77].count(3)
+#  puts "Our count"
+#  puts [5, 3, 77].my_count(3)
+#  puts "Built-in count"
+#  puts [5, 3, 77, 1].count { |elt| elt > 1 }
+#  puts "Our count"
+#  puts [5, 3, 77, 1].my_count { |elt| elt > 1 }
+#  puts "Built-in count"
+#  puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
+#  puts "Our count"
+#  puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric}
+#  puts "Built-in count"
+#  puts [1, 2, 4, 2].count               #=> 4
+#  puts [1, 2, 4, 2].count(2)            #=> 2
+#  puts [1, 2, 4, 2].count{ |x| x%2==0 } #=> 3
+#  puts "Our count"
+#  puts [1, 2, 4, 2].my_count               #=> 4
+#  puts [1, 2, 4, 2].my_count(2)            #=> 2
+#  puts [1, 2, 4, 2].my_count{ |x| x%2==0 } #=> 3
+#  puts "Testing with a range"
+#  puts "Built-in count"
+#  puts (5..50).count               #=> 46
+#  puts "Our count"
+#  puts (5..50).my_count               #=> 46
+#  puts "When passing an integer"
+#  puts "Built-in count"
+#  puts [1, 3, 78, 90, 3].count(3)             #=> 2
+#  puts "Our count"
+#  puts [1, 3, 78, 90, 3].count(3)             #=> 2
 
 # pputs "======= Tests for my_map ======"
 # puts "When we pass a block and a range as an argument"
@@ -283,54 +280,63 @@ require_relative 'enumerables.rb'
 # puts (1..4).my_map { |i| i*i }      #=> [1, 4, 9, 16]
 # puts (1..4).my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
 
-# puts"======= Testing my_inject==========="
+puts"======= Testing my_inject==========="
 
 # puts"Built-in inject"
-# puts[1, 2, 3, 4].inject { |acc, elt| acc * elt }
+# puts[1, 2, 3, 4].inject { |acc, elt| acc * elt } #undefined method `[]' for nil:NilClass (NoMethodError)
 # puts"Our my_inject"
-# puts[1, 2, 3, 4].my_inject { |acc, elt| acc * elt }
+# puts[1, 2, 3, 4].my_inject { |acc, elt| acc * elt } #undefined method `[]' for nil:NilClass (NoMethodError)
 # puts"Built-in inject"
-# puts[1, 2, 3, 4].inject(5) { |acc, elt| acc * elt }
+# puts[1, 2, 3, 4].inject(5) { |acc, elt| acc * elt } #undefined method `[]' for nil:NilClass (NoMethodError)
 # puts"Our my_inject"
-# puts[1, 2, 3, 4].my_inject(5) { |acc, elt| acc * elt }
+# puts[1, 2, 3, 4].my_inject(5) { |acc, elt| acc * elt } #undefined method `[]' for nil:NilClass (NoMethodError)
 # puts"Built-in inject"
-# puts[1, 2, 3, 4].inject(5, :+)
+# puts[1, 2, 3, 4].inject(5, :+) #undefined method `[]' for nil:NilClass (NoMethodError)
 # puts"Our my_inject"
-# puts[1, 2, 3, 4].my_inject(5, :+)
+# puts[1, 2, 3, 4].my_inject(5, :+) #undefined method `[]' for nil:NilClass (NoMethodError)
 # puts"Built-in inject"
-# puts[1, 2, 3, 4].inject(:+)
+# puts[1, 2, 3, 4].inject(:+)  # undefined method `[]' for nil:NilClass (NoMethodError)
 # puts"Our my_inject"
-# puts[1, 2, 3, 4].my_inject(:+)
+# puts[1, 2, 3, 4].my_inject(:+) # undefined method `[]' for nil:NilClass (NoMethodError)
 # puts"Built-in inject"
 # puts["a", "b", "c"].inject("d", :*) # Returns TypeError
 # puts"Our my_inject"
 # puts ["a", "b", "c"].my_inject("d", :*) # Returns TypeError
 # puts "Built-in inject"
-# puts [1, 2, 4].inject([3,4], :*) # Returns the argument array the number of times equal to the reduced value)
-# puts "Our my_inject"
-# puts [1, 2, 4].my_inject([3,4], :*)
-# puts "Built-in inject"
+puts [1, 2, 4].inject([3,4], :*) # Returns the argument array the number of times equal to the reduced value)
+puts "Our my_inject"
+puts [1, 2, 4].my_inject([3,4], :*)
+puts "Built-in inject"
 # puts {score1: 5, score2: 3, score3: 10}.inject { |elt| elt + 5 }
-# puts "Our my_inject"
+puts "Our my_inject"
 # puts {score1: 5, score2: 3, score3: 10}.my_inject { |elt| elt + 5 }
+puts "Built-in inject"
+puts ["a", "b", "c", "d"].inject { |acc, elt| acc += elt }
+puts "Our my_inject"
+puts ["a", "b", "c", "d"].my_inject { |acc, elt| acc += elt }
+puts "Built-in inject"
+puts (5..10).inject { |sum, n| sum + n }            #=> 45
+puts (5..10).inject(1) { |product, n| product * n } #=> 151200
+longest = %w{ cat sheep bear }.inject do |memo, word|
+memo.length > word.length ? memo : word
+end
+puts longest                                        #=> "sheep"
+puts "Our my_inject"
+puts (5..10).my_inject { |sum, n| sum + n }            #=> 45
+puts (5..10).my_inject(1) { |product, n| product * n } #=> 151200
+longest = %w{ cat sheep bear }.inject do |memo, word|
+memo.length > word.length ? memo : word
+end
+puts longest #=> "sheep"
 # puts "Built-in inject"
-# puts ["a", "b", "c", "d"].inject { |acc, elt| acc += elt }
+# puts [1, 3, 78, 90, 3].inject
 # puts "Our my_inject"
-# puts ["a", "b", "c", "d"].my_inject { |acc, elt| acc += elt }
-# puts "Built-in inject"
-# puts (5..10).inject { |sum, n| sum + n }            #=> 45
-# puts (5..10).inject(1) { |product, n| product * n } #=> 151200
-# longest = %w{ cat sheep bear }.inject do |memo, word|
-# memo.length > word.length ? memo : word
-# end
-# puts longest                                        #=> "sheep"
-# puts "Our my_inject"
-# puts (5..10).my_inject { |sum, n| sum + n }            #=> 45
-# puts (5..10).my_inject(1) { |product, n| product * n } #=> 151200
-# longest = %w{ cat sheep bear }.inject do |memo, word|
-# memo.length > word.length ? memo : word
-# end
-# puts longest #=> "sheep"
+# puts [1, 3, 78, 90, 3].my_inject
+puts "=====symbol as argument ======"
+puts "Built-in inject"
+p [1, 3, 78, 90, 3].inject(:+)
+puts "Our my_inject"
+p [1, 3, 78, 90, 3].my_inject(:+)
 # puts "Built-in inject"
 # puts "line".inject("simple") { |acc, elt| acc * elt} " #Returns a NoMethodError
 # puts "Our my_inject"

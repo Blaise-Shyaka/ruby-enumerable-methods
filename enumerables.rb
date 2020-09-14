@@ -164,6 +164,8 @@ module Enumerable
   end
 
   def my_inject(*arg)
+    return raise LocalJumpError.new "No block given" if (arg.length == 0) && (!block_given?) 
+
     if arg.length > 2
       return ArgumentError.new "wrong number of arguments (given #{arg.length}, expected 0..2)"
     end
@@ -185,7 +187,7 @@ module Enumerable
           result = result.send(our_sym, self[i])
           i += 1
         end
-        result
+        return result
       end
       if arg.length == 2
         our_sym = arg[1].to_s[0]
@@ -195,7 +197,7 @@ module Enumerable
           result = result.send(our_sym, self[i])
           i += 1
         end
-        result
+        return result
       end
     elsif block_given?
       if (arg.length == 1) && (arg[0].is_a? Integer)
@@ -211,7 +213,7 @@ module Enumerable
         end
         result = arg[0]
         my_each { |el| result = yield(result, el) }
-        result
+        return result
       end
 
       if arg.length.zero?
@@ -223,7 +225,7 @@ module Enumerable
             acc = yield(acc, result[i])
             i += 1
           end
-          acc
+          return acc
         elsif is_a? Array
           result = self[0]
           i = 1
@@ -231,7 +233,7 @@ module Enumerable
             result = yield(result, self[i])
             i += 1
           end
-          result
+          return result
         end
       end
     end
