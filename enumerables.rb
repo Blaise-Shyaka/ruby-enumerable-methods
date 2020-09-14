@@ -97,10 +97,8 @@ module Enumerable
       if arg[0].is_a? Class
         while i < length
           return true if self[i].is_a? arg[0]
-
           i += 1
         end
-        false
       else
         i = 0
         while i < length
@@ -109,7 +107,7 @@ module Enumerable
           i += 1
         end
       end
-      false
+      return false
     end
     block = lambda { |obj| obj } unless block_given?
 

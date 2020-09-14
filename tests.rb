@@ -1,59 +1,59 @@
 require_relative 'enumerables.rb'
 
-puts "======= Tests for my_each ======"
-puts "Built-in each: "
-["a", "b", "c"].each { |x| print x, " -- " }
-puts ""
-puts "my_each: "
-[ "a", "b", "c" ].my_each { |x| print x, " -- " }
-puts ""
-puts "Built-in each: "
-#puts [3, 5, 67, 23, 4].each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer
-puts "Our my_each: "
-#puts [3, 5, 67, 23, 4].my_each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer (same as each)
-puts "Built-in each: "
-new_proc = proc { |num| num < (0 + 9) / 2 }
-puts Range.new(5, 50).each(&new_proc)
-puts "Our each ..."
-new_proc = proc { |num| num < (0 + 9) / 2 }
-puts Range.new(5, 50).my_each(&new_proc)
-puts "With each..."
-puts "Built-in each: for hashes"
-puts "When the block has zero parameters"
-my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-puts my_hash.each { 
-    puts "Without parameter..."
-}
-puts "Our each ... for hashes"
-my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-puts my_hash.my_each {
-    puts "Without parameter..."
-}
-puts "When the block has one parameter"
-my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-puts my_hash.each { |key|
-    puts "Key is: #{key*2}"
-}
-puts "Our each ... for hashes"
-my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-puts my_hash.my_each { |key|
-    puts "Key is: #{key*2}"
-}
-puts "When the block has two parameters"
-my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-puts my_hash.each { |key, value|
-    puts "Key is: #{key}, value is: #{value*2}"
-}
-puts "Our each ... for hashes"
-my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-puts my_hash.my_each { |key, value|
-puts "Key is: #{key}, value is: #{value*2}"
-}
+# puts "======= Tests for my_each ======"
+# puts "Built-in each: "
+# ["a", "b", "c"].each { |x| print x, " -- " }
+# puts ""
+# puts "my_each: "
+# [ "a", "b", "c" ].my_each { |x| print x, " -- " }
+# puts ""
+# puts "Built-in each: "
+# puts [3, 5, 67, 23, 4].each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer
+# puts "Our my_each: "
+# puts [3, 5, 67, 23, 4].my_each {|el,el2| puts el+el2} # Fails, nil can't be coerced into Integer (same as each)
+# puts "Built-in each: "
+# new_proc = proc { |num| num < (0 + 9) / 2 }
+# puts Range.new(5, 50).each(&new_proc)
+# puts "Our each ..."
+# new_proc = proc { |num| num < (0 + 9) / 2 }
+# puts Range.new(5, 50).my_each(&new_proc)
+# puts "With each..."
+# puts "Built-in each: for hashes"
+# puts "When the block has zero parameters"
+# my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+# puts my_hash.each { 
+#     puts "Without parameter..."
+# }
+# puts "Our each ... for hashes"
+# my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+# puts my_hash.my_each {
+#     puts "Without parameter..."
+# }
+# puts "When the block has one parameter"
+# my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+# puts my_hash.each { |key|
+#     puts "Key is: #{key*2}"
+# }
+# puts "Our each ... for hashes"
+# my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+# puts my_hash.my_each { |key|
+#     puts "Key is: #{key*2}"
+# }
+# puts "When the block has two parameters"
+# my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+# puts my_hash.each { |key, value|
+#     puts "Key is: #{key}, value is: #{value*2}"
+# }
+# puts "Our each ... for hashes"
+# my_hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+# puts my_hash.my_each { |key, value|
+# puts "Key is: #{key}, value is: #{value*2}"
+# }
 
-puts "With a for loop..."
-#for i in 0...my_hash.length - 1
+# puts "With a for loop..."
+# for i in 0...my_hash.length - 1
 #    {|key, value| puts key }
-#end
+# end
 
 
 # puts "======= Tests for my_each_with_index ======"
@@ -155,6 +155,8 @@ puts "With a for loop..."
 # puts %w[ant bear cat].any? { |word| word.length >= 3 } #=> true
 # puts %w[ant bear cat].any? { |word| word.length >= 4 } #=> true
 # puts %w[ant bear cat].any?(/d/)                        #=> false
+# puts "==== testing integers for built-in any"
+# puts %w[ant bear cat].any?(Integer)                    #=> false
 # puts [nil, true, 99].any?(Integer)                     #=> true
 # puts [nil, true, 99].any?                              #=> true
 # puts [].any?                                           #=> false
@@ -162,6 +164,8 @@ puts "With a for loop..."
 # puts %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
 # puts %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
 # puts %w[ant bear cat].my_any?(/d/)                        #=> false
+# puts "==== testing integers for my_any"
+# puts %w[ant bear cat].my_any?(Integer)                    #=> false
 # puts [nil, true, 99].my_any?(Integer)                     #=> true
 # puts [nil, true, 99].my_any?                           #=> true
 # puts [].my_any? #=> false
