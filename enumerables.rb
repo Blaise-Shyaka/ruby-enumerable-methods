@@ -38,9 +38,11 @@ module Enumerable
   def my_each_with_index
     return to_enum unless block_given?
 
+    (is_a? Range) ? iterable_array = to_a : iterable_array = self
+
     i = 0
-    while i < length
-      yield(self[i], i)
+    while i < iterable_array.length
+      yield(iterable_array[i], i)
       i += 1
     end
     self
@@ -271,3 +273,11 @@ end
 def multiply_els(arg)
   arg.my_inject { |acc, el| acc * el }
 end
+
+
+HIGHEST_VALUE = 9
+range = Range.new(5, 50)
+false_block = proc { |num| num > HIGHEST_VALUE }
+words = %w[dog door rod blade]
+array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
+range.my_each_with_index{ |num, index| 
