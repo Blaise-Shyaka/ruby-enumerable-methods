@@ -100,33 +100,24 @@ require_relative 'enumerables.rb'
 # puts [1, 2, 3, 4, 5].my_select { |num|  num.even?  }   #=> [2, 4]
 # puts [:foo, :bar].my_select{ |x| x == :foo }   #=> [:foo]
 
-# puts "======= Tests for my_all ======"
-# puts "Built-in all?"
-# puts [nil, true, 99].all?
-# puts "Our my_all?"
-# puts [nil, true, 99].my_all?
-# puts "Built-in all?"
-# puts [1, 4, 5, 99, "g"].all? (Numeric)
-# puts "Our my_all?"
-# puts [1, 4, 5, 99, "g"].my_all? (Numeric)
-# puts "Built-in all?"
-# puts [8, 4, 4, 2].all? {|elt| elt % 2 == 0}
-# puts "Our my_all?"
-# puts [8, 4, 4, 2].my_all? {|elt| elt % 2 == 0}
-# puts "Built-in all?"
-# puts %w[ant bear cat].all? { |word| word.length >= 3 } #=> true
-# puts %w[ant bear cat].all? { |word| word.length >= 4 } #=> false
-# puts %w[ant bear cat].all?(/t/)                        #=> false
-# puts [1, 2i, 3.14].all?(Numeric)                       #=> true
-# puts [nil, true, 99].all?                              #=> false
-# puts [].all?                                           #=> true
-# puts "Our my_all?"
-# puts %w[ant bear cat].my_all? { |word| word.length >= 3 } #=> true
-# puts %w[ant bear cat].my_all? { |word| word.length >= 4 } #=> false
-# puts %w[ant bear cat].my_all?(/t/)                        #=> false
-# puts [1, 2i, 3.14].my_all?(Numeric)                       #=> true
-# puts [nil, true, 99].my_all?                              #=> false
-# puts [].my_all?                                           #=> true
+ puts "======= Tests for my_all ======"
+ puts [nil, true, 99].all? === [nil, true, 99].my_all?
+ puts ([1, 4, 5, 99, "g"].all? (Numeric)) === ([1, 4, 5, 99, "g"].my_all?(Numeric))
+ puts ([8, 4, 4, 2].all? {|elt| elt % 2 == 0}) === ([8, 4, 4, 2].my_all? {|elt| elt % 2 == 0})   
+ puts "Built-in all?"
+ puts %w[ant bear cat].all? { |word| word.length >= 3 } #=> true
+ puts %w[ant bear cat].all? { |word| word.length >= 4 } #=> false
+ puts %w[ant bear cat].all?(/t/) #=> false
+ puts [1, 2i, 3.14].all?(Numeric)                       #=> true
+ puts [nil, true, 99].all?                              #=> false
+ puts [].all?                                           #=> true
+ puts "Our my_all?"
+ puts %w[ant bear cat].my_all? { |word| word.length >= 3 } #=> true
+ puts %w[ant bear cat].my_all? { |word| word.length >= 4 } #=> false
+ puts %w[ant bear cat].my_all?(/t/)                       #=> false
+ puts [1, 2i, 3.14].my_all?(Numeric)                       #=> true
+ puts [nil, true, 99].my_all? #=> false
+ puts [].my_all?                                           #=> true
 # puts "Built-in all?"
 # puts [1, 4, 5, 99, "g"].all? (Numeric, String) #They throw an error
 # puts "Our my_all?"
@@ -135,21 +126,27 @@ require_relative 'enumerables.rb'
 # puts "all? is: #{[5, 3, 6].all?(Block)}" #They throw a NameError
 # puts "Our my_all?"
 # puts "all? is: #{[5, 3, 6].my_all?(Block)}" #They throw a NameError
-# puts "Built-in all?"
-# HIGHEST_VALUE = 9
-# range = Range.new(5, 50)
-# false_block = proc { |num| num > HIGHEST_VALUE }
-# words = %w[dog door rod blade]
-# array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
-# puts words.all?(/d/)
-# puts range.all?(&false_block)
-# puts array.all?(3)
-# puts "Our my_all?"
-# puts words.my_all?(/d/)
-# puts range.my_all?(&false_block)
-# puts array.my_all?(3)
+ puts "Built-in all?"
+ HIGHEST_VALUE = 9
+ range = Range.new(5, 50)
+ false_block = proc { |num| num > HIGHEST_VALUE }
+ words = %w[dog door rod blade]
+ array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
+ puts words.all?(/d/)
+ puts range.all?(&false_block)
+ puts array.all?(3)
+ puts "Our my_all?"
+ puts words.my_all?(/d/)
+ puts range.my_all?(&false_block)
+ puts array.my_all?(3)
+ # puts "=======latest tests suggested by TSE======="
+ array = []
+ 3.times { array << 1991 }
+ puts array.all?(1991) === array.my_all?(1991)
+ arr = ["ccc","ccc","ccc"]
+ puts arr.all?("ccc") === arr.my_all?("ccc")
 
-# puts "======= Tests for my_any ======"
+ puts "======= Tests for my_any ======"
 # puts "Built-in any?"
 # puts "any? is: #{[5,3,77].any?(Numeric)}"
 # puts "Our my_any?"
@@ -189,6 +186,7 @@ require_relative 'enumerables.rb'
 # puts range.my_any?(&false_block) === range.any?(&false_block) #=> true
 # puts words.my_any?(/d/) === words.any?(/d/) #=> true
 # puts words.my_any?('cat') === words.any?('cat') #=> true
+
 
 # puts "======= Tests for my_any ======"
 # puts "Built-in none?"
