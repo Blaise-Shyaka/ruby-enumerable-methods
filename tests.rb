@@ -135,6 +135,19 @@ require_relative 'enumerables.rb'
 # puts "all? is: #{[5, 3, 6].all?(Block)}" #They throw a NameError
 # puts "Our my_all?"
 # puts "all? is: #{[5, 3, 6].my_all?(Block)}" #They throw a NameError
+# puts "Built-in all?"
+# HIGHEST_VALUE = 9
+# range = Range.new(5, 50)
+# false_block = proc { |num| num > HIGHEST_VALUE }
+# words = %w[dog door rod blade]
+# array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
+# puts words.all?(/d/)
+# puts range.all?(&false_block)
+# puts array.all?(3)
+# puts "Our my_all?"
+# puts words.my_all?(/d/)
+# puts range.my_all?(&false_block)
+# puts array.my_all?(3)
 
 # puts "======= Tests for my_any ======"
 # puts "Built-in any?"

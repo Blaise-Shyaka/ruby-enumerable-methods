@@ -63,18 +63,31 @@ module Enumerable
   end
 
   def my_all?(*arg, &block)
+
+    (is_a? Range) ? iterable_array = to_a : iterable_array = self
+
     if arg.length == 1
       i = 0
+      if arg[0].is_a? Regexp
+        while i < iterable_array.length
+          return false unless arg[0].match(iterable_array[i])
+
+          i += 1
+        end
+        return true
+      end
+
+      i = 0
       if arg[0].is_a? Class
-        while i < length
-          return false unless self[i].is_a? arg[0]
+        while i < iterable_array.length
+          return false unless iterable_array[i].is_a? arg[0]
 
           i += 1
         end
         return true
       else
-        while i < length
-          return false if self[i] != arg
+        while i < iterable_array.length
+          return false if iterable_array[i] != arg
 
           i += 1
         end
@@ -84,12 +97,12 @@ module Enumerable
     block = lambda { |obj| obj } unless block_given?
 
     i = 0
-    while i < length
-      return false unless block.call(self[i])
+    while i < iterable_array.length
+      return false unless block.call(iterable_array[i])
 
       i += 1
     end
-    true
+    return true
   end
 
   def my_any?(*arg, &block)
@@ -280,4 +293,6 @@ range = Range.new(5, 50)
 false_block = proc { |num| num > HIGHEST_VALUE }
 words = %w[dog door rod blade]
 array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
-range.my_each_with_index{ |num, index| 
+puts range.my_all?(&false_block) === range.all?(&false_block) #=> false
+puts words.my_all?(/d/) === words.all?(/d/) #=> false
+puts array.my_all?(3) === array.all?(3) #=> false
