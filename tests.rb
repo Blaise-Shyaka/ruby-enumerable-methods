@@ -190,46 +190,46 @@ require_relative 'enumerables.rb'
 # puts words.my_any?(/d/) === words.any?(/d/) #=> true
 # puts words.my_any?('cat') === words.any?('cat') #=> true
 
-puts "======= Tests for my_any ======"
-puts "Built-in none?"
-puts "none? is: #{[5, 3, 77].none?(Numeric) }"
-puts "Our my_none?"
-puts "my_none? is: #{[5, 3, 77].my_none?(Numeric) }"
-puts "Built-in none?"
-puts "none? is: #{[5, 3, 77, "f"].none?(String) }"
-puts "Our my_none?"
-puts "my_none? is: #{[5, 3, 77, "f"].my_none?(String) }"
-puts "Built-in none?"
-puts [7, 5, 1, 5].none? {|elt| elt % 2 == 0 }
-puts "Our my_none?"
-puts [7, 5, 1, 5].my_none? {|elt| elt % 2 == 0 }
-puts "Built-in none?"
-puts %w{ant bear cat}.none? { |word| word.length == 5 } #=> true
-puts %w{ ant bear cat }.none? { |word| word.length >= 4 } #=> false
-puts %w{ ant bear cat }.none?(/d/)                        #=> true
-puts [1, 3.14, 42].none?(Float)                         #=> false
-puts [].none?                                           #=> true
-puts [nil].none?                                        #=> true
-puts [nil, false].none?                                 #=> true
-puts [nil, false, true].none?                           #=> false
-puts "Our my_none?"
-puts %w{ant bear cat }.my_none? { |word| word.length == 5 } #=> true
-puts %w{ant bear cat }.my_none? { |word| word.length >= 4 } #=> false
-puts %w{ant bear cat }.my_none?(/d/)                        #=> true
-puts [1, 3.14, 42].my_none?(Float)                         #=> false
-puts [].my_none?                                           #=> true
-puts [nil].my_none?                                        #=> true
-puts [nil, false].my_none?                                 #=> true
-puts [nil, false, true].my_none?                           #=> false
-puts "===COMPARE any to my_none"
-HIGHEST_VALUE = 9
-range = Range.new(5, 50)
-false_block = proc { |num| num > HIGHEST_VALUE }
-words = %w[dog door rod blade]
-array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
-puts range.my_none?(&false_block) === range.none?(&false_block) #=> true
-puts words.my_none?(/d/) === words.none?(/d/) #=> true
-puts words.my_none?('cat') === words.none?('cat') #=> true
+# puts "======= Tests for my_any ======"
+# puts "Built-in none?"
+# puts "none? is: #{[5, 3, 77].none?(Numeric) }"
+# puts "Our my_none?"
+# puts "my_none? is: #{[5, 3, 77].my_none?(Numeric) }"
+# puts "Built-in none?"
+# puts "none? is: #{[5, 3, 77, "f"].none?(String) }"
+# puts "Our my_none?"
+# puts "my_none? is: #{[5, 3, 77, "f"].my_none?(String) }"
+# puts "Built-in none?"
+# puts [7, 5, 1, 5].none? {|elt| elt % 2 == 0 }
+# puts "Our my_none?"
+# puts [7, 5, 1, 5].my_none? {|elt| elt % 2 == 0 }
+# puts "Built-in none?"
+# puts %w{ant bear cat}.none? { |word| word.length == 5 } #=> true
+# puts %w{ ant bear cat }.none? { |word| word.length >= 4 } #=> false
+# puts %w{ ant bear cat }.none?(/d/)                        #=> true
+# puts [1, 3.14, 42].none?(Float)                         #=> false
+# puts [].none?                                           #=> true
+# puts [nil].none?                                        #=> true
+# puts [nil, false].none?                                 #=> true
+# puts [nil, false, true].none?                           #=> false
+# puts "Our my_none?"
+# puts %w{ant bear cat }.my_none? { |word| word.length == 5 } #=> true
+# puts %w{ant bear cat }.my_none? { |word| word.length >= 4 } #=> false
+# puts %w{ant bear cat }.my_none?(/d/)                        #=> true
+# puts [1, 3.14, 42].my_none?(Float)                         #=> false
+# puts [].my_none?                                           #=> true
+# puts [nil].my_none?                                        #=> true
+# puts [nil, false].my_none?                                 #=> true
+# puts [nil, false, true].my_none?                           #=> false
+# puts "===COMPARE any to my_none"
+# HIGHEST_VALUE = 9
+# range = Range.new(5, 50)
+# false_block = proc { |num| num > HIGHEST_VALUE }
+# words = %w[dog door rod blade]
+# array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
+# puts range.my_none?(&false_block) === range.none?(&false_block) #=> true
+# puts words.my_none?(/d/) === words.none?(/d/) #=> true
+# puts words.my_none?('cat') === words.none?('cat') #=> true
 
 #  puts "======= Tests for my_count ======"
 #  puts "Built-in count"
@@ -307,6 +307,16 @@ puts words.my_none?('cat') === words.none?('cat') #=> true
 # puts "Our my_map"
 # puts (1..4).my_map { |i| i*i }      #=> [1, 4, 9, 16]
 # puts (1..4).my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
+# puts "====Compare built-in map with our my_map"
+# HIGHEST_VALUE = 9 
+# LOWEST_VALUE = 0
+# block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
+# my_proc = proc { |num| num > 10 }
+# range = Range.new(5, 50)
+# array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
+# puts range.my_map(&block) === range.map(&block) 
+# puts range.my_map(&block) === range.map(&block)
+# puts array.my_map(my_proc) { |num| num < 10 } === array.map(&my_proc)
 
 # puts"======= Testing my_inject==========="
 # puts"Built-in inject"

@@ -177,18 +177,23 @@ module Enumerable
     count
   end
 
-  def my_map
+  def my_map(*arg)
     res = []
     if is_a? Range
       to_a.my_each { |elt| res.push(yield(elt)) }
-      res
+      return res
     end
     return unless is_a? Array
 
     return to_enum unless block_given?
 
+    if (arg[0].is_a? Proc) && block_given?
+      my_each { |elt| res.push(arg[0].call(elt)) }
+      return res
+    end
+
     my_each { |elt| res.push(yield(elt)) }
-    res
+    return res
   end
 
   def my_inject(*arg, &block)
@@ -301,14 +306,11 @@ def multiply_els(arg)
 end
 
 
-HIGHEST_VALUE = 9
+HIGHEST_VALUE = 9 
+LOWEST_VALUE = 0
+block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
+my_proc = proc { |num| num > 10 }
 range = Range.new(5, 50)
-false_block = proc { |num| num > HIGHEST_VALUE }
-words = %w[dog door rod blade]
 array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
-# puts range.my_all?(&false_block) === range.all?(&false_block) #=> false
-# puts words.my_all?(/d/) === words.all?(/d/) #=> false
-# puts array.my_all?(3) === array.all?(3) #=> false
-puts range.my_any?(&false_block) === range.any?(&false_block) #=> false
-puts words.my_any?(/d/) === words.any?(/d/) #=> false
-puts words.my_any?('cat') === words.any?('cat') #=> false
+puts range.my_map(&block) === range.map(&block) #=> false
+puts array.my_map(my_proc) { |num| num < 10 } === array.map(&my_proc) #=> false
