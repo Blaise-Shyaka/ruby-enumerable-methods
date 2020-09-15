@@ -308,16 +308,15 @@ require_relative 'enumerables.rb'
 # puts (1..4).my_map { |i| i*i }      #=> [1, 4, 9, 16]
 # puts (1..4).my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
 # puts "====Compare built-in map with our my_map"
-# HIGHEST_VALUE = 9 
+# HIGHEST_VALUE = 9
 # LOWEST_VALUE = 0
 # block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
 # my_proc = proc { |num| num > 10 }
 # range = Range.new(5, 50)
 # array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
-# puts range.my_map(&block) === range.map(&block) 
+# puts range.my_map(&block) === range.map(&block)
 # puts range.my_map(&block) === range.map(&block)
 # puts array.my_map(my_proc) { |num| num < 10 } === array.map(&my_proc)
-
 # puts"======= Testing my_inject==========="
 # puts"Built-in inject"
 # puts [1, 2, 3, 4].inject { |acc, elt| acc * elt } #24
@@ -427,3 +426,7 @@ require_relative 'enumerables.rb'
 # puts [1, 2, 3, 4].inject([3, 4, 5, 6]) (Returns a TypeError)
 # puts "Testing with multiply_els..."
 # puts multiply_els([2, 4, 7, 5])
+# puts "Cases suggested by the last TSE"
+# range = Range.new(5, 50)
+# puts range.inject(:*) === range.my_inject(:*)
+# puts range.inject(2, :*) === range.my_inject(2, :*)

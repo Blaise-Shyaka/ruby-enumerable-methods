@@ -63,7 +63,6 @@ module Enumerable
   end
 
   def my_all?(*arg, &block)
-
     (is_a? Range) ? iterable_array = to_a : iterable_array = self
 
     if arg.length == 1
@@ -106,7 +105,6 @@ module Enumerable
   end
 
   def my_any?(*arg, &block)
-
     (is_a? Range) ? iterable_array = to_a : iterable_array = self
 
     if arg.length == 1
@@ -200,24 +198,21 @@ module Enumerable
     return raise LocalJumpError.new "No block given" if (arg.length == 0) && (!block_given?)
 
     if arg.length > 2
-      return ArgumentError.new "wrong number of arguments (given #{arg.length}, expected 0..2)"
+      return raise ArgumentError.new "wrong number of arguments (given #{arg.length}, expected 0..2)"
     end
-
-    return 'Error' unless (is_a? Array) || (is_a? Range)
+    return raise NoMethodError.new "undefined method 'inject' for #{self.class}" unless (is_a? Array) || (is_a? Range)
 
     result = 0
     if !block_given?
-
-      return if is_a? Range
-
+      (is_a? Range) ? iterable_array = to_a : iterable_array = self
       if arg.length == 1
         return TypeError.new "#{arg[0]} is not a symbol nor a string" unless (arg[0].is_a? Symbol) || (arg[0].is_a? String) # Check if it's only a symbol
 
         our_sym = arg[0].to_s[0]
-        result = self[0]
+        result = iterable_array[0]
         i = 1
-        while i < length
-          result = result.send(our_sym, self[i])
+        while i < iterable_array.length
+          result = result.send(our_sym, iterable_array[i])
           i += 1
         end
         return result
@@ -226,8 +221,8 @@ module Enumerable
         our_sym = arg[1].to_s[0]
         result = arg[0]
         i = 0
-        while i < length
-          result = result.send(our_sym, self[i])
+        while i < iterable_array.length
+          result = result.send(our_sym, iterable_array[i])
           i += 1
         end
         return result
@@ -304,13 +299,3 @@ end
 def multiply_els(arg)
   arg.my_inject { |acc, el| acc * el }
 end
-
-
-HIGHEST_VALUE = 9 
-LOWEST_VALUE = 0
-block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
-my_proc = proc { |num| num > 10 }
-range = Range.new(5, 50)
-array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
-puts range.my_map(&block) === range.map(&block) #=> false
-puts array.my_map(my_proc) { |num| num < 10 } === array.map(&my_proc) #=> false
