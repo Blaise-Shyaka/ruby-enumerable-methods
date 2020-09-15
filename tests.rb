@@ -180,6 +180,15 @@ require_relative 'enumerables.rb'
 # puts [nil, true, 99].my_any?(Integer)                     #=> true
 # puts [nil, true, 99].my_any?                           #=> true
 # puts [].my_any? #=> false
+# puts "===COMPARE any to my_any"
+# HIGHEST_VALUE = 9
+# range = Range.new(5, 50)
+# false_block = proc { |num| num > HIGHEST_VALUE }
+# words = %w[dog door rod blade]
+# array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
+# puts range.my_any?(&false_block) === range.any?(&false_block) #=> true
+# puts words.my_any?(/d/) === words.any?(/d/) #=> true
+# puts words.my_any?('cat') === words.any?('cat') #=> true
 
 # puts "======= Tests for my_any ======"
 # puts "Built-in none?"
