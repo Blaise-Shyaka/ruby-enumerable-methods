@@ -38,9 +38,8 @@ module Enumerable
   def my_each_with_index
     return to_enum unless block_given?
 
-    (is_a? Range)||(is_a? Hash) ? iterable_array = to_a : iterable_array = self
+    (is_a? Range) || (is_a? Hash) ? iterable_array = to_a : iterable_array = self
 
-    #(is_a? Hash) ? iterable_array = to_a : iterable_array = self
     i = 0
     while i < iterable_array.length
       yield(iterable_array[i], i)
@@ -70,6 +69,7 @@ module Enumerable
       if arg[0].is_a? Regexp
         while i < iterable_array.length
           return false unless arg[0].match(iterable_array[i])
+
           i += 1
         end
         return true
@@ -78,12 +78,14 @@ module Enumerable
       if arg[0].is_a? Class
         while i < iterable_array.length
           return false unless iterable_array[i].is_a? arg[0]
+
           i += 1
         end
         return true
       else
         while i < iterable_array.length
           return false if iterable_array[i] != arg[0]
+
           i += 1
         end
       end
@@ -93,11 +95,11 @@ module Enumerable
     i = 0
     while i < iterable_array.length
       return false unless block.call(iterable_array[i])
+
       i += 1
     end
     return true
   end
-
 
   def my_any?(*arg, &block)
     (is_a? Range) ? iterable_array = to_a : iterable_array = self
@@ -123,7 +125,7 @@ module Enumerable
       else
         i = 0
         while i < iterable_array.length
-          return true if iterable_array[i] == arg
+          return true if iterable_array[i] == arg[0]
 
           i += 1
         end
@@ -294,11 +296,3 @@ end
 def multiply_els(arg)
   arg.my_inject { |acc, el| acc * el }
 end
-
-
-
-puts "=======Testing my_each_with_index"
-puts "Test suggested by previous TSE"
-my_hash={1 => 'Kubilay', 2 => 'Pink Floyd'}
-puts my_hash.each_with_index { |pair|  p pair } === my_hash.my_each_with_index { |pair|  p pair }
-

@@ -78,6 +78,9 @@ require_relative 'enumerables.rb'
 # hash[item] = index
 # }
 # puts hash   #=> {"cat"=>0, "dog"=>1, "wombat"=>2}
+# puts "Test suggested by previous TSE"
+# my_hash={1 => 'Kubilay', 2 => 'Pink Floyd'}
+# puts my_hash.each_with_index { |pair|  p pair } === my_hash.my_each_with_index { |pair|  p pair }
 
 # puts "======= Tests for my_select ======"
 # puts "It should return the enumerable if no block given"
@@ -100,24 +103,24 @@ require_relative 'enumerables.rb'
 # puts [1, 2, 3, 4, 5].my_select { |num|  num.even?  }   #=> [2, 4]
 # puts [:foo, :bar].my_select{ |x| x == :foo }   #=> [:foo]
 
- puts "======= Tests for my_all ======"
- puts [nil, true, 99].all? === [nil, true, 99].my_all?
- puts ([1, 4, 5, 99, "g"].all? (Numeric)) === ([1, 4, 5, 99, "g"].my_all?(Numeric))
- puts ([8, 4, 4, 2].all? {|elt| elt % 2 == 0}) === ([8, 4, 4, 2].my_all? {|elt| elt % 2 == 0})   
- puts "Built-in all?"
- puts %w[ant bear cat].all? { |word| word.length >= 3 } #=> true
- puts %w[ant bear cat].all? { |word| word.length >= 4 } #=> false
- puts %w[ant bear cat].all?(/t/) #=> false
- puts [1, 2i, 3.14].all?(Numeric)                       #=> true
- puts [nil, true, 99].all?                              #=> false
- puts [].all?                                           #=> true
- puts "Our my_all?"
- puts %w[ant bear cat].my_all? { |word| word.length >= 3 } #=> true
- puts %w[ant bear cat].my_all? { |word| word.length >= 4 } #=> false
- puts %w[ant bear cat].my_all?(/t/)                       #=> false
- puts [1, 2i, 3.14].my_all?(Numeric)                       #=> true
- puts [nil, true, 99].my_all? #=> false
- puts [].my_all?                                           #=> true
+# puts "======= Tests for my_all ======"
+# puts [nil, true, 99].all? === [nil, true, 99].my_all?
+# puts ([1, 4, 5, 99, "g"].all? (Numeric)) === ([1, 4, 5, 99, "g"].my_all?(Numeric))
+# puts ([8, 4, 4, 2].all? {|elt| elt % 2 == 0}) === ([8, 4, 4, 2].my_all? {|elt| elt % 2 == 0})
+# puts "Built-in all?"
+# puts %w[ant bear cat].all? { |word| word.length >= 3 } #=> true
+# puts %w[ant bear cat].all? { |word| word.length >= 4 } #=> false
+# puts %w[ant bear cat].all?(/t/) #=> false
+# puts [1, 2i, 3.14].all?(Numeric)                       #=> true
+# puts [nil, true, 99].all?                              #=> false
+# puts [].all?                                           #=> true
+# puts "Our my_all?"
+# puts %w[ant bear cat].my_all? { |word| word.length >= 3 } #=> true
+# puts %w[ant bear cat].my_all? { |word| word.length >= 4 } #=> false
+# puts %w[ant bear cat].my_all?(/t/)                       #=> false
+# puts [1, 2i, 3.14].my_all?(Numeric)                       #=> true
+# puts [nil, true, 99].my_all? #=> false
+# puts [].my_all?                                           #=> true
 # puts "Built-in all?"
 # puts [1, 4, 5, 99, "g"].all? (Numeric, String) #They throw an error
 # puts "Our my_all?"
@@ -126,27 +129,27 @@ require_relative 'enumerables.rb'
 # puts "all? is: #{[5, 3, 6].all?(Block)}" #They throw a NameError
 # puts "Our my_all?"
 # puts "all? is: #{[5, 3, 6].my_all?(Block)}" #They throw a NameError
- puts "Built-in all?"
- HIGHEST_VALUE = 9
- range = Range.new(5, 50)
- false_block = proc { |num| num > HIGHEST_VALUE }
- words = %w[dog door rod blade]
- array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
- puts words.all?(/d/)
- puts range.all?(&false_block)
- puts array.all?(3)
- puts "Our my_all?"
- puts words.my_all?(/d/)
- puts range.my_all?(&false_block)
- puts array.my_all?(3)
- # puts "=======latest tests suggested by TSE======="
- array = []
- 3.times { array << 1991 }
- puts array.all?(1991) === array.my_all?(1991)
- arr = ["ccc","ccc","ccc"]
- puts arr.all?("ccc") === arr.my_all?("ccc")
+# puts "Built-in all?"
+# HIGH_VALUE = 9
+# range = Range.new(5, 50)
+# false_block = proc { |num| num > HIGH_VALUE }
+# words = %w[dog door rod blade]
+# array = [2, 34, 43, 54, 68, 93, 3, 14, 62, 51, 28, 38, 34]
+# puts words.all?(/d/)
+# puts range.all?(&false_block)
+# puts array.all?(3)
+# puts "Our my_all?"
+# puts words.my_all?(/d/)
+# puts range.my_all?(&false_block)
+# puts array.my_all?(3)
+# puts "=======latest tests suggested by TSE======="
+# array = []
+# 3.times { array << 1991 }
+# puts array.all?(1991) === array.my_all?(1991)
+# arr = ["ccc","ccc","ccc"]
+# puts arr.all?("ccc") === arr.my_all?("ccc")
 
- puts "======= Tests for my_any ======"
+# puts "======= Tests for my_any? ======"
 # puts "Built-in any?"
 # puts "any? is: #{[5,3,77].any?(Numeric)}"
 # puts "Our my_any?"
@@ -177,7 +180,7 @@ require_relative 'enumerables.rb'
 # puts [nil, true, 99].my_any?(Integer)                     #=> true
 # puts [nil, true, 99].my_any?                           #=> true
 # puts [].my_any? #=> false
-# puts "===COMPARE any to my_any"
+# puts "===my_any with a range====="
 # HIGHEST_VALUE = 9
 # range = Range.new(5, 50)
 # false_block = proc { |num| num > HIGHEST_VALUE }
@@ -186,9 +189,12 @@ require_relative 'enumerables.rb'
 # puts range.my_any?(&false_block) === range.any?(&false_block) #=> true
 # puts words.my_any?(/d/) === words.any?(/d/) #=> true
 # puts words.my_any?('cat') === words.any?('cat') #=> true
+# array = []
+# 3.times { array << 1991 }
+# puts "========Test suggested by last TSE========"
+# puts array.any?(1991) === array.my_any?(1991)
 
-
-# puts "======= Tests for my_any ======"
+# puts "======= Tests for my_none? ======"
 # puts "Built-in none?"
 # puts "none? is: #{[5, 3, 77].none?(Numeric) }"
 # puts "Our my_none?"
@@ -229,39 +235,39 @@ require_relative 'enumerables.rb'
 # puts words.my_none?(/d/) === words.none?(/d/) #=> true
 # puts words.my_none?('cat') === words.none?('cat') #=> true
 
-#  puts "======= Tests for my_count ======"
-#  puts "Built-in count"
-#  puts [5, 3, 77].count(3)
-#  puts "Our count"
-#  puts [5, 3, 77].my_count(3)
-#  puts "Built-in count"
-#  puts [5, 3, 77, 1].count { |elt| elt > 1 }
-#  puts "Our count"
-#  puts [5, 3, 77, 1].my_count { |elt| elt > 1 }
-#  puts "Built-in count"
-#  puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
-#  puts "Our count"
-#  puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric}
-#  puts "Built-in count"
-#  puts [1, 2, 4, 2].count               #=> 4
-#  puts [1, 2, 4, 2].count(2)            #=> 2
-#  puts [1, 2, 4, 2].count{ |x| x%2==0 } #=> 3
-#  puts "Our count"
-#  puts [1, 2, 4, 2].my_count               #=> 4
-#  puts [1, 2, 4, 2].my_count(2)            #=> 2
-#  puts [1, 2, 4, 2].my_count{ |x| x%2==0 } #=> 3
-#  puts "Testing with a range"
-#  puts "Built-in count"
-#  puts (5..50).count               #=> 46
-#  puts "Our count"
-#  puts (5..50).my_count               #=> 46
-#  puts "When passing an integer"
-#  puts "Built-in count"
-#  puts [1, 3, 78, 90, 3].count(3)             #=> 2
-#  puts "Our count"
-#  puts [1, 3, 78, 90, 3].count(3)             #=> 2
+# puts "======= Tests for my_count ======"
+# puts "Built-in count"
+# puts [5, 3, 77].count(3)
+# puts "Our count"
+# puts [5, 3, 77].my_count(3)
+# puts "Built-in count"
+# puts [5, 3, 77, 1].count { |elt| elt > 1 }
+# puts "Our count"
+# puts [5, 3, 77, 1].my_count { |elt| elt > 1 }
+# puts "Built-in count"
+# puts [7, 5, 1, 5].count {|elt| elt.kind_of? Numeric}
+# puts "Our count"
+# puts [7, 5, 1, 5].my_count {|elt| elt.kind_of? Numeric}
+# puts "Built-in count"
+# puts [1, 2, 4, 2].count               #=> 4
+# puts [1, 2, 4, 2].count(2)            #=> 2
+# puts [1, 2, 4, 2].count{ |x| x%2==0 } #=> 3
+# puts "Our count"
+# puts [1, 2, 4, 2].my_count               #=> 4
+# puts [1, 2, 4, 2].my_count(2)            #=> 2
+# puts [1, 2, 4, 2].my_count{ |x| x%2==0 } #=> 3
+# puts "Testing with a range"
+# puts "Built-in count"
+# puts (5..50).count               #=> 46
+# puts "Our count"
+# puts (5..50).my_count               #=> 46
+# puts "When passing an integer"
+# puts "Built-in count"
+# puts [1, 3, 78, 90, 3].count(3)             #=> 2
+# puts "Our count"
+# puts [1, 3, 78, 90, 3].count(3)             #=> 2
 
-# pputs "======= Tests for my_map ======"
+# puts "======= Tests for my_map ======"
 # puts "When we pass a block and a range as an argument"
 # puts "Built-in map"
 # puts (1..4).map { |i| i*i }
@@ -410,8 +416,8 @@ require_relative 'enumerables.rb'
 # puts "line".inject(:+)" #Returns a NoMethodError
 # puts "Our my_inject"
 # puts "line".my_inject(:+) #Returns a NoMethodError
-#  puts "Built-in inject"
-#  puts [1, 2, 3, 4].inject (Returns Local JumpError no block given)
+# puts "Built-in inject"
+# puts [1, 2, 3, 4].inject (Returns Local JumpError no block given)
 # puts "Our my_inject"
 # puts [1, 2, 3, 4].my_inject (Returns Local JumpError no block given)
 # puts "Built-in inject"
