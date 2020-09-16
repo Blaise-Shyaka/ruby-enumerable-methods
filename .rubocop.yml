@@ -1,0 +1,10 @@
+Style/CaseEquality:
+  Enabled: false
+Metrics:
+  Enabled: false
+Style:
+  Enabled: false
+Layout/LineLength:
+  Enabled: false
+Lint/RedundantStringCoercion:
+  Enabled: false
